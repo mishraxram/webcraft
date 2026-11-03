@@ -111,6 +111,26 @@ function setupProjectTools() {
   };
 }
 
+// Steps to put the site online for free. These need internet, so they are links only.
+const HOST_STEPS = [
+  ["Netlify Drop (easiest): click Download ZIP, unzip it, then drag the folder onto ", "https://app.netlify.com/drop", ". You get a public link in a few seconds."],
+  ["GitHub Pages: make a repository, upload index.html and style.css, then turn on Pages in Settings. Guide: ", "https://pages.github.com", ""]
+];
+
+function renderHostSteps() {
+  const list = el("ol", "host-steps");
+  HOST_STEPS.forEach(([before, url, after]) => {
+    const link = el("a", "", url.replace("https://", ""));
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    const item = el("li", "", before);
+    item.append(link, after);
+    list.append(item);
+  });
+  return list;
+}
+
 // Download buttons for the review step, with an error line under them
 function renderExport() {
   const wrap = el("div", "export");
@@ -169,7 +189,9 @@ function renderExport() {
     el("h2", "", "Download or publish"),
     credit,
     el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000."),
-    htmlButton, zipButton, publishButton, error, result
+    htmlButton, zipButton, publishButton, error, result,
+    el("h2", "host-title", "Put it online"),
+    renderHostSteps()
   );
   return wrap;
 }

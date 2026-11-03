@@ -85,3 +85,5 @@
 | 81 | Split hero without image or subtext | Button sits under the headline | grid-column 1 | Pass |
 | 82 | Review step | Type and template shown by name; unset theme/font say "From template"; empty answers in muted mono | "Restaurant", "Classic / Rust", "From template", class empty | Pass |
 | 83 | Builder opened on a phone | Preview starts on Mobile | device = Mobile below 760px | Pass |
+| 84 | Click Full screen in preview bar | Site opens in a new tab at full size, with animations | New tab "Test Cafe" (blob URL), full width, entry animations kept | Pass |
+| 85 | Review step, "Put it online" | Netlify Drop and GitHub Pages steps with links that open in a new tab | 2 steps, links target _blank rel noopener, ink color | Pass |

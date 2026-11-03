@@ -40,6 +40,13 @@ function fitPreview() {
   frame.style.marginLeft = scale === 1 ? (stage.clientWidth - device.width) / 2 + "px" : "0";
 }
 
+// Full screen: open the real page (with its animations) in a new browser tab
+function openFullScreen() {
+  const url = URL.createObjectURL(new Blob([buildSite(state)], { type: "text/html" }));
+  open(url, "_blank");
+  setTimeout(() => URL.revokeObjectURL(url), 60000);  // the tab has loaded by then, free the memory
+}
+
 function setupPreview() {
   const bar = document.getElementById("preview-devices");
   DEVICES.forEach(d => {
@@ -53,6 +60,7 @@ function setupPreview() {
     };
     bar.append(button);
   });
+  document.getElementById("fullscreen-btn").onclick = openFullScreen;
   new ResizeObserver(fitPreview).observe(document.getElementById("preview-stage"));
 
   // Any typing or picking inside the wizard refreshes the preview

@@ -117,3 +117,7 @@
 ## Second review round
 - What: all theme radii are 0 or 4 and every body font is an embedded one; footers line up with the content; Split's button sits under the headline; Classic's Contact heading is a small label above the big line; sidebar footer spaced out; Pause sits on the strip's top line; review shows names, "From template" and muted empty rows; phones start the preview on Mobile.
 - Why: the design reviewer re-scored the UI (builder 8, templates 7) and listed these as the remaining gaps.
+
+## Full screen preview and hosting guide
+- What: a "Full screen" button above the preview opens the finished site in a new browser tab (a blob URL, with animations); the review step has a "Put it online" list with Netlify Drop and GitHub Pages steps.
+- Why: the small scaled preview was hard to use, and users need a clear free path from the ZIP to a public link (Section 12: real hosting needs internet).
