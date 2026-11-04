@@ -1,11 +1,6 @@
-// Template gallery for step 3: live thumbnails, layout filter, search, random pick.
-// Filters only hide tiles, so the 30 thumbnails are not rebuilt on every click.
-
-let galleryLayout = "all";  // layout filter, kept when the step re-renders
+let galleryLayout = "all";
 let gallerySearch = "";
 
-// Placeholder text so thumbnails do not look empty before steps 6-8 are filled.
-// Only used for thumbnails, never saved into state.
 const THUMB_SAMPLE = {
   heroText: "A short line about what you do.",
   about: "A few sentences about you or your business.",
@@ -32,7 +27,6 @@ function renderGallery(input, id) {
   const empty = el("p", "gallery-empty", "No template matches. Try another word or pick All.");
   const sample = thumbState();
 
-  // One tile per template: hidden radio (for keyboard), scaled-down live page, name
   const tiles = TEMPLATES.map((template, i) => {
     const tile = el("label", "tile");
     const radio = el("input");
@@ -44,8 +38,8 @@ function renderGallery(input, id) {
 
     const frame = el("iframe");
     frame.setAttribute("aria-hidden", "true");
-    frame.setAttribute("sandbox", "");  // thumbnails never run scripts
-    frame.setAttribute("scrolling", "no");  // no scrollbar inside the small thumbnail
+    frame.setAttribute("sandbox", "");
+    frame.setAttribute("scrolling", "no");
     frame.tabIndex = -1;
     frame.loading = "lazy";
     frame.srcdoc = template.build(sample);
@@ -74,7 +68,6 @@ function renderGallery(input, id) {
   search.value = gallerySearch;
   search.oninput = () => { gallerySearch = search.value; applyFilters(); };
 
-  // Random: pick one of the tiles that are visible now
   const random = el("button", "", "Random");
   random.type = "button";
   random.onclick = () => {
@@ -87,7 +80,6 @@ function renderGallery(input, id) {
     tile.scrollIntoView({ block: "nearest" });
   };
 
-  // Show only tiles that match the layout filter and the search words
   function applyFilters() {
     const words = gallerySearch.trim().toLowerCase();
     let shown = 0;

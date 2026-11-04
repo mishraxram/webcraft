@@ -1,12 +1,8 @@
-// Image upload for the logo, hero, about and card images.
-// PNG, JPG, SVG or WebP. Photos are shrunk in the browser (canvas) so many images still fit in storage.
-// The saved image is a base64 "data URL" text, so it lives in state and inside the downloaded HTML.
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/svg+xml", "image/webp"];
-const MAX_IMAGE_KB = 500;      // the saved image can be at most this big
-const MAX_PHOTO_MB = 5;        // a photo can be picked up to this size, then it is shrunk
-const MAX_SIDE = 1200;         // longest side of a shrunk photo, in pixels
+const MAX_IMAGE_KB = 500;
+const MAX_PHOTO_MB = 5;
+const MAX_SIDE = 1200;
 
-// Draw the photo smaller on a canvas and save it as WebP. done("") if the browser cannot read it.
 function shrinkImage(dataUrl, maxSide, done) {
   const img = new Image();
   img.onload = () => {
@@ -21,7 +17,6 @@ function shrinkImage(dataUrl, maxSide, done) {
   img.src = dataUrl;
 }
 
-// Check a picked file and turn it into a data URL. done(errorText, dataUrl).
 function readImage(file, maxSide, done) {
   if (!IMAGE_TYPES.includes(file.type)) return done("Use a PNG, JPG, SVG or WebP image.");
   const isSvg = file.type === "image/svg+xml";
@@ -30,7 +25,7 @@ function readImage(file, maxSide, done) {
   const reader = new FileReader();
   reader.onerror = () => done("Could not read this file.");
   reader.onload = () => {
-    if (isSvg) return done("", reader.result);  // SVG is already small and sharp at any size
+    if (isSvg) return done("", reader.result);
     shrinkImage(reader.result, maxSide, small => {
       if (!small) return done("Could not read this image.");
       if (small.length * 0.75 > MAX_IMAGE_KB * 1024) return done("This image is still over " + MAX_IMAGE_KB + " KB after shrinking. Try a smaller one.");
@@ -40,8 +35,6 @@ function readImage(file, maxSide, done) {
   reader.readAsDataURL(file);
 }
 
-// File picker with a preview and a Remove button.
-// getImage() returns the current image; setImage(url) saves a new one ("" removes it).
 function imagePicker(id, label, getImage, setImage, maxSide) {
   const wrap = el("div", "upload");
   const error = el("p", "error");
@@ -81,7 +74,6 @@ function imagePicker(id, label, getImage, setImage, maxSide) {
   return wrap;
 }
 
-// A step field with image: true (logo, hero image, about image)
 function renderImageInput(input, id) {
   return imagePicker(id, input.label, () => getValue(input.field), url => setValue(input.field, url), input.maxSide || MAX_SIDE);
 }

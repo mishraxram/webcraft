@@ -1,8 +1,4 @@
-// all wizard questions
-// A step with one input uses "field". A step with several inputs lists them in "fields".
-// "field" is a path into state, like "contact.email".
 const STEPS = [
-  // image: true draws a file picker instead of a text box (see upload.js)
   { id: "name", title: "Site name and logo", help: "Shown in the header and browser tab. No logo? Your initials are used.",
     fields: [
       { type: "text", field: "siteName", label: "Site name", required: true, maxLength: 40 },
@@ -13,7 +9,6 @@ const STEPS = [
     type: "mcq", field: "siteType", label: "Site type", required: true,
     options: ["portfolio", "business", "blog", "event", "restaurant", "student"] },
 
-  // gallery: true draws thumbnails instead of plain radio buttons (see gallery.js)
   { id: "template", title: "Pick a template", help: "Filter by layout or search by theme name. You can change colors in the next step.",
     type: "mcq", field: "templateId", label: "Template", required: true, gallery: true,
     options: TEMPLATES.map(template => template.id) },
@@ -69,8 +64,6 @@ const STEPS = [
     type: "review" }
 ];
 
-// Smart defaults per site type: a starting menu, and example text shown as grey hints.
-// Hints are placeholders only; they never go into the site unless the user types them.
 const SITE_DEFAULTS = {
   portfolio: { menu: ["Home", "Projects", "About", "Contact"], heroTitle: "I design and build websites people enjoy",
     heroText: "One line: what you do and for whom.", about: "Who you are, what you are good at, what work you want.",
@@ -92,12 +85,10 @@ const SITE_DEFAULTS = {
     "cards.title": "Project name", "cards.detail": "One line: what you built and with what" }
 };
 
-// Example text for a field, for the chosen site type ("" if none)
 function typeHint(field) {
   return (SITE_DEFAULTS[state.siteType] || {})[field] || "";
 }
 
-// After step 2: use the menu that fits the site type, unless the user already changed the menu
 function applyTypeDefaults() {
   const defaults = SITE_DEFAULTS[state.siteType];
   const menuNow = JSON.stringify(state.menuItems);
@@ -106,8 +97,6 @@ function applyTypeDefaults() {
   if (defaults && untouched) state.menuItems = defaults.menu.slice();
 }
 
-// List of all 12 steps beside the form. Finished steps are buttons, so the user can jump back.
-// Later steps are plain text: they must be reached with Next, so every step is checked.
 function renderRail() {
   const list = el("ol", "rail");
   STEPS.forEach((step, i) => {
@@ -126,10 +115,8 @@ function renderRail() {
   return list;
 }
 
-// Big outlined step number (decoration only), then "03 / 12" in mono and a thin bar
 function renderProgress() {
   const pad = n => String(n).padStart(2, "0");
-  // "turn" plays a short slide-in only when the step changes, not when a list row is added
   const box = document.getElementById("wizard");
   box.classList.toggle("turn", box.dataset.step !== String(current));
   box.dataset.step = current;

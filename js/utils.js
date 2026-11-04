@@ -1,12 +1,7 @@
-// escapeHTML, validation, small helpers
-
-// App name lives only here. APP_KEY prefixes localStorage keys and export file names.
 const APP_NAME = "WebCraft";
 const APP_TAGLINE = "12 steps. One website. No AI.";
 const APP_KEY = "webcraft";
 
-// Read or write a value by path, like "contact.email".
-// state lives in app.js; it exists by the time these run.
 function getValue(path) {
   return path.split(".").reduce((obj, key) => obj[key], state);
 }
@@ -16,37 +11,30 @@ function setValue(path, value) {
   keys.reduce((obj, key) => obj[key], state)[last] = value;
 }
 
-// ---- Save / load ----
 const SAVE_KEY = APP_KEY + "_state";
 
-// Auto-save answers and the current step. Storage can be full or blocked, so errors are ignored.
 function saveState() {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify({ state: state, step: current }));
   } catch (e) {
-    // storage full (many big images) or blocked: the app still works, but tell the user
     const error = document.getElementById("project-error");
     error.textContent = "Auto-save is full, so a refresh would lose your newest changes. Use Save project file.";
     error.hidden = false;
   }
 }
 
-// Load the auto-save on start. A missing or broken save means a fresh start.
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
     if (saved && applySaved(saved.state)) current = Math.min(Math.max(0, saved.step | 0), STEPS.length - 1);
   } catch (e) {
-    // start fresh
   }
 }
 
 function clearSave() {
-  try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* nothing saved */ }
+  try { localStorage.removeItem(SAVE_KEY); } catch (e) { }
 }
 
-// Copy saved answers into state: only fields state already has, with the same type.
-// Saved files can be edited by hand, so anything unknown or wrong is skipped.
 function applySaved(saved) {
   if (!saved || typeof saved !== "object") return false;
   Object.keys(state).forEach(key => {
@@ -59,13 +47,12 @@ function applySaved(saved) {
     } else if (typeof state[key] === "object" && !Array.isArray(state[key]) && value && typeof value === "object") {
       Object.keys(state[key]).forEach(k => { if (typeof value[k] === "string") state[key][k] = value[k]; });
     } else if (typeof state[key] === typeof value && typeof value !== "object") {
-      state[key] = value;  // plain text, or true/false for madeWith
+      state[key] = value;
     }
   });
   return true;
 }
 
-// Small helper to make an element. Text goes in with textContent, so it is never run as HTML.
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -77,9 +64,7 @@ function escapeHTML(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-// Check one input's value. Returns an error message, or "" if it is fine.
 function validate(step, value) {
-  // list: check the item count, then check every text inside it
   if (Array.isArray(value)) {
     const texts = value.flatMap(item => typeof item === "object" ? [item.title, item.detail] : [item]);
     if (step.required && !texts.some(t => t.trim())) return "Add at least one item.";
@@ -99,7 +84,6 @@ function validate(step, value) {
   return "";
 }
 
-// Error text under a field, linked to the field so screen readers read it with the field
 function errorLine(wrap, id, message) {
   const line = el("p", "error", message);
   line.id = id + "-error";

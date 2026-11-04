@@ -1,20 +1,14 @@
-// Accessibility check on the review step: looks at the finished site and lists problems.
-// DOMParser reads the HTML as data only; nothing in it runs.
-
-// How bright a color looks, 0 (black) to 1 (white), using the WCAG formula
 function luminance(hex) {
   const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
     .map(v => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-// Contrast ratio between two colors, 1 to 21. Normal text needs at least 4.5.
 function contrast(a, b) {
   const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (light + 0.05) / (dark + 0.05);
 }
 
-// Returns a list of problems in plain words. An empty list means the site passed.
 function checkSite(state) {
   const problems = [];
   const doc = new DOMParser().parseFromString(buildSite(state), "text/html");
@@ -36,7 +30,6 @@ function checkSite(state) {
   return problems;
 }
 
-// The check as a small panel for the review step
 function renderChecks() {
   const problems = checkSite(state);
   const wrap = el("div", "checks");

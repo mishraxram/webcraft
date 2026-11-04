@@ -1,13 +1,7 @@
-// 10 themes. A theme is data only: colors, fonts, corner radius, spacing.
-// radius = corner size in px, 0 or 4 only (CLAUDE.md Section 8). spacing = base unit in px, layouts multiply it.
-// button: solid, outline or underline. caps: section headings in spaced capitals.
-// dark: true marks a dark theme, so the site's mode button offers a light look instead.
-// Headings and body text always use real fonts that ship inside the site (see fontdata.js).
 const FRAUNCES = '"Fraunces", Georgia, serif';
 const DMSANS = '"DM Sans", Arial, sans-serif';
 const MONO = '"JetBrains Mono", "Courier New", monospace';
 
-// Step 4 "Font style" replaces the theme's fonts with one of these
 const FONT_STYLES = {
   serif: { headingFont: FRAUNCES, bodyFont: FRAUNCES },
   sans: { headingFont: DMSANS, bodyFont: DMSANS },
@@ -46,7 +40,6 @@ const THEMES = [
     colors: { bg: "#10161C", text: "#DDE3E8", muted: "#93A1AD", accent: "#4FB3A9", onAccent: "#10161C", line: "#2A343D" } }
 ];
 
-// Small extra shown on a step 4 option: four color squares for a theme, "Aa" in the font for a font style
 function optionExtra(field, option) {
   const box = el("span", "option-extra");
   box.setAttribute("aria-hidden", "true");

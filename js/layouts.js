@@ -1,7 +1,3 @@
-// Layouts. Each one is a function (state, theme) => full HTML page as a string.
-// Shared parts (menu, sections, footer, page wrapper) live in parts.js.
-
-// ---- Classic: top bar, big headline, cards in a grid. Large type, roomy. ----
 function classicLayout(state, theme) {
   const css = `
 body { font-size: 1.0625rem; line-height: 1.6; }
@@ -30,7 +26,7 @@ h2 { font-size: 1.75rem; margin-bottom: calc(var(--s) * 1.5); }
 .contact { line-height: 2; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
   width: min(100% - var(--s) * 4, 68rem - var(--s) * 4); margin: 0 auto; padding: calc(var(--s) * 2) 0;
-  border-top: 1px solid var(--line); color: var(--muted); }  /* same width as the content above */
+  border-top: 1px solid var(--line); color: var(--muted); }
 #contact h2 { font-family: var(--body); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
 .social a { margin-left: var(--s); }
 @media (max-width: 760px) {
@@ -43,14 +39,13 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
-// ---- Sidebar: fixed left column with name and menu. Medium type, tight rows. ----
 function sidebarLayout(state, theme) {
   const css = `
 body { font-size: 1rem; line-height: 1.7; display: grid; grid-template-columns: 16rem 1fr; min-height: 100vh; }
 aside { padding: calc(var(--s) * 2); border-right: 1px solid var(--line); }
 aside strong { display: block; font-size: 1.5rem; line-height: 1.1; margin-bottom: calc(var(--s) * 2); }
 aside nav a { display: block; padding: calc(var(--s) * 0.25) 0; color: var(--text); text-decoration: none; }
-main { min-width: 0; padding: calc(var(--s) * 3); max-width: 60rem; }  /* min-width 0: the moving strip must not widen the column */
+main { min-width: 0; padding: calc(var(--s) * 3); max-width: 60rem; }
 section { margin-bottom: calc(var(--s) * 3); }
 .hero h1 { font-size: 2.25rem; line-height: 1.15; }
 .hero p { color: var(--muted); margin: var(--s) 0 calc(var(--s) * 1.5); }
@@ -75,7 +70,6 @@ footer { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: s
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
-// ---- Minimal: one narrow column, small headline, big body text, lots of air. ----
 function minimalLayout(state, theme) {
   const css = `
 body { font-size: 1.125rem; line-height: 1.75; }
@@ -100,7 +94,6 @@ footer { max-width: 38rem; margin: 0 auto; padding: calc(var(--s) * 2); font-siz
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main></div>${footerHTML(state)}`);
 }
 
-// ---- Split: uneven 7/5 columns. Work on the left, about and contact boxes on the right. ----
 function splitLayout(state, theme) {
   const css = `
 body { font-size: 1rem; line-height: 1.6; }
@@ -112,15 +105,15 @@ main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap:
   max-width: 72rem; margin: 0 auto; padding: 0 calc(var(--s) * 2) calc(var(--s) * 3); }
 .hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: calc(var(--s) * 3); align-items: end; padding: calc(var(--s) * 4) 0; border-bottom: 1px solid var(--line); }
-.hero .kicker { grid-column: 1 / -1; }  /* label on its own row, so the headline keeps the left column */
-.hero:has(+ .strip) { border-bottom: 0; }  /* the strip draws its own line */
+.hero .kicker { grid-column: 1 / -1; }
+.hero:has(+ .strip) { border-bottom: 0; }
 .hero h1 { grid-row: span 2; font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.1; }
 .hero p { color: var(--muted); }
-.hero .btn { grid-column: 1; justify-self: start; }  /* under the headline, never alone on the right */
+.hero .btn { grid-column: 1; justify-self: start; }
 .hero .hero-img { grid-column: 1 / -1; margin: 0; aspect-ratio: 21 / 9; }
 .strip { grid-row: 2; }
 .work { grid-column: 1; grid-row: 2 / span 2; }
-main:has(.strip) .work { grid-row: 3 / span 2; }  /* the strip takes row 2 when it is there */
+main:has(.strip) .work { grid-row: 3 / span 2; }
 #contact .cta { font-size: 1.75rem; }
 #about, #contact { grid-column: 2; border: 1px solid var(--line); border-radius: min(var(--r), 12px); padding: calc(var(--s) * 1.5); }
 h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-bottom: 2px solid var(--accent); }
@@ -142,7 +135,6 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);
 }
 
-// ---- Magazine: masthead, huge uppercase headline, numbered sections. Biggest type scale. ----
 function magazineLayout(state, theme) {
   const css = `
 body { font-size: 1.0625rem; line-height: 1.65; }

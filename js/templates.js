@@ -1,5 +1,3 @@
-// Build every template with a loop: each layout x each theme.
-// 5 layouts x 10 themes = 50 templates. Adding one theme adds 5 templates, no new code.
 const TEMPLATES = [];
 
 LAYOUTS.forEach(layout => {
@@ -14,13 +12,10 @@ LAYOUTS.forEach(layout => {
   });
 });
 
-// The final site: the picked template, with the step 4 color and font choices on top.
-// Used by the live preview, and later by Download and Publish.
 function siteTemplate(state) {
   return TEMPLATES.find(t => t.id === state.templateId) || TEMPLATES[0];
 }
 
-// The template's theme, with the step 4 color and font choices on top
 function siteTheme(state) {
   const template = siteTemplate(state);
   const colors = THEMES.find(t => t.id === state.themeId) || THEMES.find(t => t.id === template.themeId);
@@ -32,8 +27,6 @@ function buildSite(state) {
   return layout.build(state, siteTheme(state));
 }
 
-// Name for the review step: "classic-rust" -> "Classic / Rust", "paper" -> "Paper",
-// "restaurant" -> "Restaurant", "" (theme or font not picked) -> "From template"
 function displayName(value) {
   if (!value) return "From template";
   const found = [...TEMPLATES, ...THEMES].find(t => t.id === value);

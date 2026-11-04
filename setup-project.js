@@ -1,16 +1,10 @@
-// setup-project.js
-// Run once inside your project folder:  node setup-project.js
-// It creates folders, empty files, and the auto-trigger hooks for Claude Code.
-
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
-// 1. Folders
 const folders = ["css", "fonts", "js", "js/lib", "sites", ".claude", ".claude/hooks"];
 folders.forEach((f) => fs.mkdirSync(f, { recursive: true }));
 
-// 2. Empty starter files (never overwrite existing ones)
 const files = [
   "index.html", "css/style.css",
   "js/steps.js", "js/themes.js", "js/layouts.js", "js/templates.js",
@@ -20,8 +14,7 @@ files.forEach((f) => {
   if (!fs.existsSync(f)) fs.writeFileSync(f, f === ".gitignore" ? "node_modules\n" : "");
 });
 
-// 3. Hook script: runs after every file Write/Edit
-const hook = String.raw`// check-rules.js - auto-runs after Claude edits a file
+const hook = String.raw`
 let raw = "";
 process.stdin.on("data", (d) => (raw += d));
 process.stdin.on("end", () => {
@@ -52,7 +45,6 @@ process.stdin.on("end", () => {
 `;
 fs.writeFileSync(path.join(".claude", "hooks", "check-rules.js"), hook);
 
-// 4. Claude Code settings with auto-trigger hooks
 const settings = {
   hooks: {
     SessionStart: [
@@ -78,7 +70,6 @@ const settings = {
 };
 fs.writeFileSync(path.join(".claude", "settings.json"), JSON.stringify(settings, null, 2));
 
-// 5. Git (optional, skipped if git is missing)
 try {
   if (!fs.existsSync(".git")) execSync("git init", { stdio: "ignore" });
 } catch (e) {

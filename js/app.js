@@ -1,5 +1,3 @@
-// wizard engine
-// All answers live in this one object.
 const state = {
   siteName: "", siteType: "", templateId: "", themeId: "", fontStyle: "",
   menuItems: ["Home", "About", "Contact"],
@@ -9,15 +7,14 @@ const state = {
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
   seo: { title: "", description: "" },
-  logo: "", heroImage: "", aboutImage: "",  // uploaded images as base64 data URLs
-  madeWith: false  // "Made with WebCraft" in the footer, off unless the user ticks it
+  logo: "", heroImage: "", aboutImage: "",
+  madeWith: false
 };
-const DEFAULT_STATE = JSON.stringify(state);  // empty answers, used before an import
+const DEFAULT_STATE = JSON.stringify(state);
 
-let current = 0;  // index of the step on screen
-let errors = {};  // field path -> error message
+let current = 0;
+let errors = {};
 
-// A step has one input (the step itself) or several (step.fields)
 function inputsOf(step) {
   return step.fields || [step];
 }
@@ -35,7 +32,6 @@ function render() {
   if (step.type === "review") box.append(renderReview(), renderChecks(), renderExport());
   else inputsOf(step).forEach(input => box.append(renderInput(input)));
 
-  // buttons
   const nav = el("div", "nav");
   const back = el("button", "", "Back");
   back.disabled = current === 0;
@@ -54,14 +50,13 @@ function render() {
   document.getElementById("rail").replaceChildren(renderRail());
 
   const first = box.querySelector("input, textarea") || box.querySelector("h1");
-  if (first.tagName === "H1") first.tabIndex = -1;  // review step: focus the title, not the page
+  if (first.tagName === "H1") first.tabIndex = -1;
   first.focus();
   schedulePreview();
   saveState();
   scheduleRecord();
 }
 
-// One field: label, the control, and the error text under it
 function renderInput(input) {
   const wrap = el("div", "field");
   const id = "f-" + input.field.replace(".", "-");
@@ -106,16 +101,15 @@ function renderInput(input) {
   return wrap;
 }
 
-// List: one row per item with a Remove button, plus an Add button (up to maxItems)
 function renderList(input, id) {
   const items = getValue(input.field);
-  const keys = input.itemFields || [null];  // null = the item is a plain string
+  const keys = input.itemFields || [null];
   const list = el("div", "list");
   items.forEach((item, i) => {
     const row = el("div", "list-row");
     keys.forEach((key, k) => {
       const box = el("input");
-      if (i === 0 && k === 0) box.id = id;  // so the label points at the first box
+      if (i === 0 && k === 0) box.id = id;
       box.name = id + "-" + i + (key ? "-" + key : "");
       box.setAttribute("aria-label", input.label + " " + (i + 1) + (key ? " " + key : ""));
       box.value = key ? item[key] : item;
@@ -138,13 +132,12 @@ function renderList(input, id) {
   return list;
 }
 
-// Review: every answer as plain text
 function renderReview() {
   const list = el("dl", "review");
   STEPS.filter(step => step.type !== "review").forEach(step => {
     inputsOf(step).forEach(input => {
       let value = getValue(input.field);
-      if (input.image && value) value = "Image added";  // not the long base64 text
+      if (input.image && value) value = "Image added";
       if (input.type === "mcq") value = displayName(value);
       if (Array.isArray(value)) value = value.map(v => typeof v === "object" ? v.title + " - " + v.detail : v).join(", ");
       list.append(el("dt", "", input.label), el("dd", value ? "" : "empty", value || "(empty)"));
@@ -156,7 +149,7 @@ function renderReview() {
 function goNext() {
   errors = {};
   inputsOf(STEPS[current]).forEach(input => {
-    if (!input.field) return;  // review step has no fields
+    if (!input.field) return;
     const error = validate(input, getValue(input.field));
     if (error) errors[input.field] = error;
   });
@@ -171,7 +164,6 @@ function goBack() {
   render();
 }
 
-// Skip clears this step's answers, so no half-filled bad value is kept
 function skipStep() {
   inputsOf(STEPS[current]).forEach(input => {
     setValue(input.field, Array.isArray(getValue(input.field)) ? [] : "");
@@ -181,14 +173,12 @@ function skipStep() {
   render();
 }
 
-// Enter = Next (not inside a textarea, where Enter makes a new line, and not on a button)
 document.addEventListener("keydown", e => {
   if (e.key !== "Enter" || e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return;
   e.preventDefault();
   goNext();
 });
 
-// Auto-save after every typed letter or pick (render() saves after button clicks)
 document.getElementById("wizard").addEventListener("input", saveState);
 document.getElementById("wizard").addEventListener("change", saveState);
 document.getElementById("wizard").addEventListener("input", scheduleRecord);

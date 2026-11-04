@@ -4,14 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
-  <!-- tab icon: the WebCraft mark, written inline so no extra file is needed -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='0.75' y='0.75' width='26.5' height='26.5' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Cpath d='M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Crect x='4' y='12' width='8.5' height='3' fill='%23D94F2B'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <p>
-      <!-- WebCraft mark: a page wireframe with the 7/5 split the builder uses -->
       <svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="0.75" y="0.75" width="26.5" height="26.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="12" width="8.5" height="3" fill="#D94F2B"/></svg>
       <strong id="app-name"></strong> <span id="app-tagline"></span>
     </p>
@@ -30,7 +28,6 @@
     <main id="wizard"></main>
     <aside class="preview" aria-label="Live preview">
       <div class="preview-bar"><span class="preview-label">Preview</span><div id="preview-devices"></div><button type="button" class="chip" id="fullscreen-btn">Full screen</button></div>
-      <!-- ink bar above the preview: file name left, device width right (filled by preview.js) -->
       <p class="proof-bar"><span id="proof-file"></span><span id="proof-width"></span></p>
       <div id="preview-stage"><iframe id="preview-frame" title="Live preview of your site" sandbox="allow-scripts"></iframe></div>
     </aside>
@@ -38,7 +35,6 @@
   <footer id="app-footer"></footer>
   <script src="js/utils.js"></script>
   <script>
-    // Fill the app name from utils.js, so it is written in one place only
     document.title = APP_NAME + " - " + APP_TAGLINE;
     document.getElementById("app-name").textContent = APP_NAME;
     document.getElementById("app-tagline").textContent = APP_TAGLINE;

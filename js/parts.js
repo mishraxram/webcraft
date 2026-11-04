@@ -1,39 +1,27 @@
-// Parts shared by every layout: safe links, menu, sections, footer, and the page wrapper.
-// Every user value goes through escapeHTML before it enters the string.
-
-// Only allow http(s) links, so a "javascript:" link can never run.
 function safeUrl(url) {
   return /^https?:\/\//i.test(url.trim()) ? escapeHTML(url.trim()) : "";
 }
 
-// "About Us" -> "about-us", used for menu anchors
 function slug(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-// Heading for the cards section changes with the site type
 const CARD_HEADINGS = { portfolio: "Projects", business: "Services", blog: "Posts",
   event: "Schedule", restaurant: "Menu", student: "Projects" };
 
-// Big closing line in the contact section, by site type (fixed text, no user input)
 const CTAS = { portfolio: "Have a project in mind?", business: "Let's work together.", blog: "Say hello.",
   event: "Questions about the event?", restaurant: "Book a table or order in.", student: "Open to internships and projects." };
 
-// Small label above the headline, also chosen by site type (fixed text, no user input)
 const KICKERS = { portfolio: "Selected work", business: "Open for business", blog: "Journal", event: "Save the date",
   restaurant: "Kitchen and dining", student: "Student portfolio" };
 
-// Only a real base64 image data URL is used. An imported project file could hold anything else.
 function safeImage(src) {
   return typeof src === "string" && /^data:image\/(png|jpeg|svg\+xml|webp);base64,[A-Za-z0-9+/=]+$/.test(src) ? src : "";
 }
 
-// <img> for an uploaded image, or "" when there is none
 function imgHTML(src, alt, className) {
   return safeImage(src) ? `<img class="${className}" src="${src}" alt="${escapeHTML(alt)}">` : "";
 }
-
-// ---- Parts shared by all layouts. Each layout styles them its own way. ----
 
 function navHTML(state) {
   return state.menuItems.filter(item => item.trim())
@@ -52,13 +40,10 @@ ${!safeImage(state.heroImage) && initialsOf(state) ? `<p class="hero-art" aria-h
 </section>${stripHTML(state)}`;
 }
 
-// A slowly moving line of the card titles under the hero (needs 3 or more, fewer looks repetitive).
-// aria-hidden: the same titles are listed again in the cards section.
 function stripHTML(state) {
   const titles = state.cards.map(card => card.title.trim()).filter(Boolean);
   if (titles.length < 3) return "";
   const items = titles.map(title => `<span>${escapeHTML(title)}</span>`).join("");
-  // the list is written twice, so moving it left by half loops without a jump
   return `<div class="strip" aria-hidden="true"><div class="strip-track">${items}${items}</div></div>`;
 }
 
@@ -74,14 +59,12 @@ function cardsHTML(state) {
   const items = cards.map(card =>
     `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
   const heading = CARD_HEADINGS[state.siteType] || "Work";
-  // id matches the heading ("projects"), so a menu item with the same name jumps here
   return `<section id="${slug(heading)}" class="work"><h2>${heading}</h2><ol class="cards">${items}</ol></section>`;
 }
 
 function contactHTML(state) {
   const c = state.contact;
   const rows = [];
-  // the email is shown large (class "email"), the other rows are normal size
   if (c.email.trim()) rows.push(`<li class="email"><a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a></li>`);
   if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
   if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
@@ -90,12 +73,10 @@ function contactHTML(state) {
   return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p><ul class="contact">${rows.join("")}</ul></section>`;
 }
 
-// "Dosa Corner" -> "DC"
 function initialsOf(state) {
   return state.siteName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
 }
 
-// Logo: the uploaded one, or a small square with the site's initials
 function logoHTML(state) {
   if (safeImage(state.logo)) return imgHTML(state.logo, state.siteName + " logo", "logo");
   const initials = initialsOf(state);
@@ -110,14 +91,12 @@ function footerHTML(state) {
   return `<footer>${wordmark}${state.footer.trim() ? `<p>${escapeHTML(state.footer)}</p>` : ""}${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
 }
 
-// Which embedded font files each family needs (data is in fontdata.js)
 const FONT_FILES = {
   "Fraunces": [["fraunces-400", 400], ["fraunces-700", 700]],
   "DM Sans": [["dm-sans-400", 400], ["dm-sans-700", 700]],
   "JetBrains Mono": [["jetbrains-mono-400", 400]]
 };
 
-// @font-face rules for only the families this theme uses, with the font inside the page as base64
 function fontFaceCSS(theme) {
   return Object.keys(FONT_FILES).filter(family => (theme.headingFont + theme.bodyFont).includes(family))
     .flatMap(family => FONT_FILES[family].map(([file, weight]) =>
@@ -125,21 +104,17 @@ function fontFaceCSS(theme) {
     .join("\n");
 }
 
-// Floating WhatsApp button, only when a number was given
 function whatsappHTML(state) {
   const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
   return number ? `<a class="wa" href="https://wa.me/${number}">WhatsApp</a>` : "";
 }
 
-// CSS variables for one set of theme colors
 function colorVars(c) {
   return `--bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent}; --line: ${c.line};`;
 }
 
-// Wraps a layout's body and CSS into a full page. Theme values become CSS variables.
 function page(state, theme, css, body) {
   const c = theme.colors;
-  // The mode button swaps a light theme to Ink colors and a dark theme to Paper colors
   const other = THEMES.find(t => t.id === (theme.dark ? "paper" : "ink")).colors;
   const title = escapeHTML(state.seo.title || state.siteName || "My site");
   const description = escapeHTML(state.seo.description);
