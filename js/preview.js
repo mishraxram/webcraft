@@ -35,9 +35,27 @@ function fitPreview() {
 }
 
 function openFullScreen() {
-  const url = URL.createObjectURL(new Blob([buildSite(state)], { type: "text/html" }));
-  open(url, "_blank");
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  const box = el("div", "fullview");
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.setAttribute("aria-label", "Full screen preview");
+  const close = el("button", "chip", "Close (Esc)");
+  close.type = "button";
+  const frame = el("iframe");
+  frame.title = "Full screen preview of your site";
+  frame.setAttribute("sandbox", "allow-scripts");
+  frame.srcdoc = buildSite(state);
+  const shut = () => {
+    box.remove();
+    document.body.classList.remove("no-scroll");
+    document.getElementById("fullscreen-btn").focus();
+  };
+  close.onclick = shut;
+  box.addEventListener("keydown", e => { if (e.key === "Escape") shut(); });
+  box.append(close, frame);
+  document.body.append(box);
+  document.body.classList.add("no-scroll");
+  close.focus();
 }
 
 function setupPreview() {
