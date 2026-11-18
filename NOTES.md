@@ -121,3 +121,7 @@
 ## Full screen preview and hosting guide
 - What: a "Full screen" button above the preview opens the finished site in a new browser tab (a blob URL, with animations); the review step has a "Put it online" list with Netlify Drop and GitHub Pages steps.
 - Why: the small scaled preview was hard to use, and users need a clear free path from the ZIP to a public link (Section 12: real hosting needs internet).
+
+## Phone share with QR code
+- What: the server now listens on the WiFi (0.0.0.0) and /publish also returns the WiFi link; the review step draws it as a QR code (js/qr.js, using the local qrcode-generator copy in js/lib), so a phone on the same WiFi opens the published site by scanning.
+- Why: the teacher can see the site on their own phone in the viva; publishing stays locked to this computer (onlyThisComputer in server.js), so other devices can only view.

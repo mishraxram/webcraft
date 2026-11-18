@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,18 @@ function isSafeName(name) {
   return typeof name === "string" && /^[a-z0-9-]{1,40}$/.test(name) && !RESERVED.includes(name);
 }
 
+function wifiAddress() {
+  const all = Object.values(os.networkInterfaces()).flat();
+  const found = all.find(a => a.family === "IPv4" && !a.internal);
+  return found ? found.address : "";
+}
+
+function onlyThisComputer(req, res, next) {
+  const ip = req.socket.remoteAddress;
+  if (ip === "127.0.0.1" || ip === "::1" || ip === "::ffff:127.0.0.1") return next();
+  res.status(403).json({ error: "Only the computer running the server can do this." });
+}
+
 app.use(express.json({ limit: "2mb" }));
 
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
@@ -19,7 +32,7 @@ app.use("/css", express.static(path.join(__dirname, "css")));
 app.use("/js", express.static(path.join(__dirname, "js")));
 app.use("/fonts", express.static(path.join(__dirname, "fonts")));
 
-app.post("/publish", (req, res) => {
+app.post("/publish", onlyThisComputer, (req, res) => {
   const name = req.body && req.body.name;
   const html = req.body && req.body.html;
   if (!isSafeName(name)) {
@@ -35,7 +48,11 @@ app.post("/publish", (req, res) => {
   } catch (e) {
     return res.status(500).json({ error: "Could not save the site on this computer." });
   }
-  res.json({ url: "http://localhost:" + PORT + "/" + name + "/" });
+  const wifi = wifiAddress();
+  res.json({
+    url: "http://localhost:" + PORT + "/" + name + "/",
+    phoneUrl: wifi ? "http://" + wifi + ":" + PORT + "/" + name + "/" : ""
+  });
 });
 
 app.use(express.static(SITES_DIR));
@@ -44,6 +61,7 @@ app.use((err, req, res, next) => {
   res.status(400).json({ error: "The request was not valid. A very big image can cause this." });
 });
 
-app.listen(PORT, "127.0.0.1", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log("WebCraft running on http://localhost:" + PORT);
+  if (wifiAddress()) console.log("Phones on the same WiFi can open http://" + wifiAddress() + ":" + PORT);
 });

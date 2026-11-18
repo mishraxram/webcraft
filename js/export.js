@@ -116,6 +116,14 @@ function renderHostSteps() {
   return list;
 }
 
+function renderPhoneShare(url) {
+  const box = el("figure", "phone-share");
+  const caption = el("figcaption", "", "Scan with a phone on the same WiFi: ");
+  caption.append(el("span", "mono", url));
+  box.append(qrSVG(url), caption);
+  return box;
+}
+
 function renderExport() {
   const wrap = el("div", "export");
   const error = el("p", "error");
@@ -144,6 +152,7 @@ function renderExport() {
   publishButton.onclick = () => {
     error.hidden = true;
     result.replaceChildren();
+    wrap.querySelectorAll(".phone-share").forEach(old => old.remove());
     if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
     publishButton.disabled = true;
     publishSite()
@@ -153,6 +162,7 @@ function renderExport() {
         link.href = answer.url;
         link.target = "_blank";
         result.append("Published: ", link);
+        if (answer.phoneUrl) result.after(renderPhoneShare(answer.phoneUrl));
       })
       .catch(() => showError("The local server is not running. Start it with npm start."))
       .finally(() => { publishButton.disabled = false; });

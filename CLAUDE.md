@@ -23,7 +23,7 @@ A website builder that runs in the browser. The user answers 12 steps (MCQ + tex
 - Use **plain HTML, CSS, JavaScript only**. (Not Java. Java does not run in a browser.)
 - Do NOT use React, Vue, Angular, Next.js, Tailwind, jQuery, or any big framework.
 - Do NOT load anything from the internet (no CDN, no Google Fonts, no external images). Fonts live in `/fonts` and load with `@font-face`.
-- Only allowed npm packages: `express` (publish server). Optional: `jszip` copied locally into `/js/lib/` for ZIP export.
+- Only allowed npm packages: `express` (publish server). Optional: `jszip` and `qrcode-generator`, copied locally into `/js/lib/` (ZIP export, QR code).
 - Write simple code with short comments. Beginner level. No clever tricks.
 - One feature at a time. After each feature, tell me exactly how to test it.
 - Do not edit files I did not mention. Do not rewrite working code.
@@ -48,10 +48,11 @@ site-builder/
 │   ├── preview.js      (live preview iframe, desktop / tablet / mobile)
 │   ├── a11y.js         (accessibility check on the review step: alt text, contrast, links, description)
 │   ├── export.js       (Download HTML / ZIP, project JSON save / open, publish, start over)
+│   ├── qr.js           (turns a link into an SVG QR code, uses lib/qrcode.js)
 │   ├── history.js      (undo / redo snapshots, Ctrl+Z / Ctrl+Y)
 │   ├── app.js          (wizard engine, state, undo/redo)
 │   ├── utils.js        (escapeHTML, validation, save/load)
-│   └── lib/            (jszip.min.js, local copy)
+│   └── lib/            (jszip.min.js, qrcode.js, local copies)
 ├── make-fontdata.js    (run after changing /fonts: writes js/fontdata.js)
 ├── server.js           (Express publish server, optional)
 ├── sites/              (published sites saved here)
@@ -99,6 +100,7 @@ Every step: Back, Next, Skip (if optional), progress shown as "03 / 12" in mono 
 
 **Extra (Days 6-8)**
 - Node publish: POST /publish saves to `/sites/name`, served at `localhost:3000/name`
+- Phone share: the server listens on the WiFi too; after publish the builder shows a QR code of `http://<wifi-ip>:3000/name` so a phone on the same WiFi can open the site
 - Accessibility check on the generated site (missing alt text, low contrast warning)
 - Generated site extras: responsive menu, sticky header, dark mode toggle, FAQ accordion, WhatsApp / mailto button, SEO + OG tags
 - Keyboard: Enter = Next, Esc = close gallery
@@ -111,6 +113,7 @@ Every step: Back, Next, Skip (if optional), progress shown as "03 / 12" in mono 
 - Never use `innerHTML` with raw user text.
 - Max length on every field. Required fields block Next. Email and phone checked.
 - Site name for publish: only a-z, 0-9, hyphen. Block `..`, `/`, `\` (stops path attacks in server.js).
+- POST /publish only accepts requests from this computer (127.0.0.1 / ::1). Other WiFi devices can only view sites.
 - Image: only png/jpg/svg/webp, max 500 KB.
 - Show clear error text under the field. No `alert()`.
 

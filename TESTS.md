@@ -87,3 +87,7 @@
 | 83 | Builder opened on a phone | Preview starts on Mobile | device = Mobile below 760px | Pass |
 | 84 | Click Full screen in preview bar | Site opens in a new tab at full size, with animations | New tab "Test Cafe" (blob URL), full width, entry animations kept | Pass |
 | 85 | Review step, "Put it online" | Netlify Drop and GitHub Pages steps with links that open in a new tab | 2 steps, links target _blank rel noopener, ink color | Pass |
+| 86 | Publish "Asha Rao" with the server running | Link to localhost:3000/asha-rao/, plus a QR code and the WiFi link | QR (37x37 SVG with 3 finder squares) and http://<wifi-ip>:3000/asha-rao/ shown under the link | Pass |
+| 87 | Publish with no WiFi connected | Only the localhost link, no QR box | phoneUrl "" so no QR shown | Pass |
+| 88 | POST /publish from another device on the WiFi | 403 "Only the computer running the server can do this." | Checked in code (onlyThisComputer); test with a phone at viva | |
+| 89 | Publish `../bad` after the WiFi change | Still rejected | 400 "Site name can only use a-z, 0-9 and -" | Pass |
