@@ -130,6 +130,13 @@ body.no-scroll { overflow: hidden; }
 .phone-share .qr { width: 160px; height: 160px; flex: none; }
 .phone-share figcaption { overflow-wrap: anywhere; }
 .phone-share .mono { display: block; margin-top: 8px; font-family: var(--mono); font-size: 14px; }
+.inbox { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+.inbox h2, .inbox p { flex-basis: 100%; margin: 0; }
+.inbox-list { flex-basis: 100%; list-style: none; margin: 0; padding: 0; }
+.inbox-list li { padding: 16px 0; border-top: 1px solid var(--rule); }
+.inbox-list .inbox-from { font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
+.inbox-list .inbox-text { margin: 8px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.inbox-list .inbox-time { color: var(--muted); font-size: 14px; }
 .host-steps { flex-basis: 100%; margin: 8px 0 0; padding-left: 20px; max-width: 60ch; }
 .host-steps li { margin-bottom: 8px; }
 .host-steps a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 3px; }

@@ -35,6 +35,13 @@ header nav a:hover, aside nav a:hover { color: var(--accent); text-decoration-co
 .contact .email a { font-family: var(--head); font-size: clamp(1.5rem, 4vw, 2.25rem); line-height: 1.2; color: var(--text);
   text-decoration: underline 1px var(--accent); text-underline-offset: 0.15em; }
 .contact .email a:hover { color: var(--accent); }
+.message-form { display: grid; gap: var(--s); max-width: 36rem; margin-top: calc(var(--s) * 2); }
+.message-form label { display: grid; gap: 6px; font-size: 0.875rem; color: var(--muted); }
+.message-form input, .message-form textarea { font: inherit; font-size: 1rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--line); border-radius: min(var(--r), 8px); padding: 10px 12px; }
+.message-form input:focus, .message-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.message-form .btn { justify-self: start; border: 0; font: inherit; cursor: pointer; }
+.message-form .btn:disabled { opacity: 0.5; cursor: wait; }
 .cards h3 { transition: color 0.2s; }
 .cards li:hover h3 { color: var(--accent); }
 
@@ -127,6 +134,37 @@ if (menu && menu.children.length) {
   button.onclick = () => setOpen(!menu.classList.contains("open"));
   menu.onclick = event => { if (event.target.closest("a")) setOpen(false); };
 }
+</script>`;
+
+const FORM_HTML = `<form class="message-form">
+<label>Your name<input name="name" maxlength="60" required autocomplete="name"></label>
+<label>Your email or phone<input name="reply" maxlength="100" required></label>
+<label>Message<textarea name="text" maxlength="1000" rows="4" required></textarea></label>
+<button class="btn" type="submit">Send message</button>
+<p class="form-note" role="status"></p>
+</form>`;
+
+const FORM_SCRIPT = `<script>
+const form = document.querySelector(".message-form");
+form.onsubmit = event => {
+  event.preventDefault();
+  const button = form.querySelector("button");
+  const note = form.querySelector(".form-note");
+  button.disabled = true;
+  note.textContent = "Sending...";
+  fetch("/message/" + location.pathname.split("/")[1], {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(Object.fromEntries(new FormData(form)))
+  })
+    .then(response => response.json())
+    .then(answer => {
+      note.textContent = answer.error || "Thanks. Your message was sent.";
+      if (!answer.error) form.reset();
+    })
+    .catch(() => { note.textContent = "Could not send. Please use the email or phone above."; })
+    .finally(() => { button.disabled = false; });
+};
 </script>`;
 
 const REVEAL_SCRIPT = `<script>

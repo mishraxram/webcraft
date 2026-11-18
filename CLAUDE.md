@@ -49,6 +49,7 @@ site-builder/
 │   ├── a11y.js         (accessibility check on the review step: alt text, contrast, links, description)
 │   ├── export.js       (Download HTML / ZIP, project JSON save / open, publish, start over)
 │   ├── qr.js           (turns a link into an SVG QR code, uses lib/qrcode.js)
+│   ├── inbox.js        (review step: shows messages sent from the published site's form)
 │   ├── history.js      (undo / redo snapshots, Ctrl+Z / Ctrl+Y)
 │   ├── app.js          (wizard engine, state, undo/redo)
 │   ├── utils.js        (escapeHTML, validation, save/load)
@@ -56,6 +57,7 @@ site-builder/
 ├── make-fontdata.js    (run after changing /fonts: writes js/fontdata.js)
 ├── server.js           (Express publish server, optional)
 ├── sites/              (published sites saved here)
+├── messages/           (one JSON file of visitor messages per published site, never served)
 └── .claude/
     ├── settings.json   (auto-trigger hooks)
     └── hooks/check-rules.js
@@ -100,6 +102,7 @@ Every step: Back, Next, Skip (if optional), progress shown as "03 / 12" in mono 
 
 **Extra (Days 6-8)**
 - Node publish: POST /publish saves to `/sites/name`, served at `localhost:3000/name`
+- Contact form: published sites (not downloads) get a message form; POST /message/name saves to `messages/name.json` (max 200), GET /messages/name shows them in the builder Inbox
 - Phone share: the server listens on the WiFi too; after publish the builder shows a QR code of `http://<wifi-ip>:3000/name` so a phone on the same WiFi can open the site
 - Accessibility check on the generated site (missing alt text, low contrast warning)
 - Generated site extras: responsive menu, sticky header, dark mode toggle, FAQ accordion, WhatsApp / mailto button, SEO + OG tags
@@ -113,7 +116,8 @@ Every step: Back, Next, Skip (if optional), progress shown as "03 / 12" in mono 
 - Never use `innerHTML` with raw user text.
 - Max length on every field. Required fields block Next. Email and phone checked.
 - Site name for publish: only a-z, 0-9, hyphen. Block `..`, `/`, `\` (stops path attacks in server.js).
-- POST /publish only accepts requests from this computer (127.0.0.1 / ::1). Other WiFi devices can only view sites.
+- POST /publish and GET /messages only accept requests from this computer (127.0.0.1 / ::1). Other WiFi devices can only view sites and send messages.
+- Messages: name 60, reply 100, text 1000 characters, all three required; stored outside `sites/` so nobody can open them by URL; shown with textContent only.
 - Image: only png/jpg/svg/webp, max 500 KB.
 - Show clear error text under the field. No `alert()`.
 

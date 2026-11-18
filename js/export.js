@@ -39,7 +39,7 @@ function publishSite() {
   return fetch("/publish", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name: siteFileName(), html: buildSite(state) })
+    body: JSON.stringify({ name: siteFileName(), html: buildSite(Object.assign({}, state, { inbox: true })) })
   }).then(response => response.json());
 }
 
@@ -179,8 +179,9 @@ function renderExport() {
   wrap.append(
     el("h2", "", "Download or publish"),
     credit,
-    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000."),
+    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000 and adds a message form to the site."),
     htmlButton, zipButton, publishButton, error, result,
+    renderInbox(),
     el("h2", "host-title", "Put it online"),
     renderHostSteps()
   );

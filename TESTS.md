@@ -91,3 +91,14 @@
 | 87 | Publish with no WiFi connected | Only the localhost link, no QR box | phoneUrl "" so no QR shown | Pass |
 | 88 | POST /publish from another device on the WiFi | 403 "Only the computer running the server can do this." | Checked in code (onlyThisComputer); test with a phone at viva | |
 | 89 | Publish `../bad` after the WiFi change | Still rejected | 400 "Site name can only use a-z, 0-9 and -" | Pass |
+| 90 | Published site: press Send with empty fields | Browser blocks it, nothing sent | Required fields stop submit, no request | Pass |
+| 91 | Published site: send a message | "Thanks. Your message was sent.", form clears, saved in messages/form-test.json | As expected | Pass |
+| 92 | Message text `<img src=x onerror=alert(1)>` and name `Ravi <b>` | Shown as plain text in the Inbox | Plain text, 0 img elements | Pass |
+| 93 | Name of 300 characters | Saved cut to 60 | 60 characters saved | Pass |
+| 94 | Empty name / array name / number text | 400 "Please fill in your name, how to reply, and a message." | As expected | Pass |
+| 95 | Message to `nosuchsite` and `..%2Fetc` | 404 "This site is not published here." | As expected | Pass |
+| 96 | Open /form-test/messages.json in browser | Not found | 404 | Pass |
+| 97 | Inbox or publish via WiFi address | 403 "Only the computer running the server can do this." | As expected; sending a message via WiFi works | Pass |
+| 98 | 201st message | 429 "This inbox is full." | File stays at 200 | Pass |
+| 99 | Download HTML / ZIP | No form and no message script | No `<form`, no `/message/` | Pass |
+| 100 | Check messages with no messages yet | "No messages yet. Publish, then send one from the form on your site." | Text shown | Pass |

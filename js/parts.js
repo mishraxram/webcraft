@@ -29,7 +29,7 @@ function navHTML(state) {
 }
 
 function heroHTML(state) {
-  const hasContact = Object.values(state.contact).some(value => value.trim());
+  const hasContact = state.inbox || Object.values(state.contact).some(value => value.trim());
   const kicker = KICKERS[state.siteType] ? `<p class="kicker">${KICKERS[state.siteType]}</p>` : "";
   return `<section id="home" class="hero">${kicker}
 <h1>${escapeHTML(state.heroTitle || state.siteName)}</h1>
@@ -69,8 +69,9 @@ function contactHTML(state) {
   if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
   if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
   if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
-  if (!rows.length) return "";
-  return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p><ul class="contact">${rows.join("")}</ul></section>`;
+  if (!rows.length && !state.inbox) return "";
+  const list = rows.length ? `<ul class="contact">${rows.join("")}</ul>` : "";
+  return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p>${list}${state.inbox ? FORM_HTML : ""}</section>`;
 }
 
 function initialsOf(state) {
@@ -136,6 +137,6 @@ ${SITE_CSS}
 ${css}
 </style></head>
 <body>${body.replace("</footer>", `<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button></footer>`)}${whatsappHTML(state)}
-${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}</body></html>`;
+${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${state.inbox ? FORM_SCRIPT : ""}</body></html>`;
 }
 

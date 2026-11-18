@@ -125,3 +125,7 @@
 ## Phone share with QR code
 - What: the server now listens on the WiFi (0.0.0.0) and /publish also returns the WiFi link; the review step draws it as a QR code (js/qr.js, using the local qrcode-generator copy in js/lib), so a phone on the same WiFi opens the published site by scanning.
 - Why: the teacher can see the site on their own phone in the viva; publishing stays locked to this computer (onlyThisComputer in server.js), so other devices can only view.
+
+## Working contact form and Inbox
+- What: a published site gets a message form (name, email or phone, message); the Express server checks it and saves it to messages/<site>.json, and "Check messages" on the review step lists them, newest first.
+- Why: it turns the static site into a real client-server app; messages live outside sites/ so no one can read them by URL, only this computer can open the inbox, and downloaded sites have no form because there is no server behind them.
