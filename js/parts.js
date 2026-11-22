@@ -1,5 +1,8 @@
 function safeUrl(url) {
-  return /^https?:\/\//i.test(url.trim()) ? escapeHTML(url.trim()) : "";
+  const trimmed = String(url || "").trim();
+  if (!trimmed || /^(javascript|data|vbscript|file):/i.test(trimmed)) return "";
+  const normalized = /^https?:\/\//i.test(trimmed) ? trimmed : "https://" + trimmed;
+  return /^https?:\/\/[a-z0-9]/i.test(normalized) ? escapeHTML(normalized) : "";
 }
 
 function slug(text) {

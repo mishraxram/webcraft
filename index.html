@@ -14,6 +14,7 @@
       <strong id="app-name"></strong> <span id="app-tagline"></span>
     </p>
     <div class="project-tools">
+      <button type="button" id="demo-btn" class="quick-demo-btn"><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true" style="margin-right:4px;vertical-align:-1px;"><path d="M9 1L3 9h5l-1 6 7-9H9V1z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Quick Demo</button>
       <button type="button" id="undo-btn" disabled>Undo</button>
       <button type="button" id="redo-btn" disabled>Redo</button>
       <button type="button" id="export-btn">Save project file</button>
@@ -27,7 +28,7 @@
     <nav id="rail" aria-label="All steps"></nav>
     <main id="wizard"></main>
     <aside class="preview" aria-label="Live preview">
-      <div class="preview-bar"><span class="preview-label">Preview</span><div id="preview-devices"></div><button type="button" class="chip" id="fullscreen-btn">Full screen</button></div>
+      <div class="preview-bar"><span class="preview-label">Preview</span><div id="preview-devices"></div><button type="button" class="chip" id="viewcode-btn">&lt;/&gt; View code</button><button type="button" class="chip" id="fullscreen-btn">Full screen</button></div>
       <p class="proof-bar"><span id="proof-file"></span><span id="proof-width"></span></p>
       <div id="preview-stage"><iframe id="preview-frame" title="Live preview of your site" sandbox="allow-scripts"></iframe></div>
     </aside>

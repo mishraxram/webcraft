@@ -43,15 +43,25 @@ function render() {
     nav.append(skip);
   }
   const next = el("button", "primary", "Next");
-  next.disabled = current === STEPS.length - 1;
-  next.onclick = goNext;
+  if (current === STEPS.length - 1) {
+    next.hidden = true;
+  } else {
+    next.onclick = goNext;
+  }
   nav.append(next);
   box.append(nav);
   document.getElementById("rail").replaceChildren(renderRail());
 
-  const first = box.querySelector("input, textarea") || box.querySelector("h1");
-  if (first.tagName === "H1") first.tabIndex = -1;
-  first.focus();
+  if (step.type === "review") {
+    const h1 = box.querySelector("h1");
+    if (h1) { h1.tabIndex = -1; h1.focus(); }
+  } else {
+    const first = box.querySelector("input:not([type='hidden']):not([type='file']), textarea") || box.querySelector("h1");
+    if (first) {
+      if (first.tagName === "H1") first.tabIndex = -1;
+      first.focus();
+    }
+  }
   schedulePreview();
   saveState();
   scheduleRecord();
@@ -165,16 +175,16 @@ function goBack() {
 }
 
 function skipStep() {
-  inputsOf(STEPS[current]).forEach(input => {
-    setValue(input.field, Array.isArray(getValue(input.field)) ? [] : "");
-  });
   errors = {};
-  current++;
+  if (current < STEPS.length - 1) current++;
   render();
 }
 
 document.addEventListener("keydown", e => {
-  if (e.key !== "Enter" || e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return;
+  if (e.key !== "Enter") return;
+  if (["TEXTAREA", "BUTTON"].includes(e.target.tagName)) return;
+  if (e.target.type === "file" || e.target.type === "search") return;
+  if (e.target.closest(".list") || e.target.closest(".gallery")) return;
   e.preventDefault();
   goNext();
 });

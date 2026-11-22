@@ -111,13 +111,15 @@ const ARROW_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="
 
 const MODE_SCRIPT = `<script>
 const modeButton = document.querySelector(".mode-btn");
-const setMode = on => { document.documentElement.classList.toggle("other-mode", on); modeButton.setAttribute("aria-pressed", on); };
-try { setMode(localStorage.getItem("site-mode:" + location.pathname) === "other"); } catch (e) {}
-modeButton.onclick = () => {
-  const on = !document.documentElement.classList.contains("other-mode");
-  setMode(on);
-  try { localStorage.setItem("site-mode:" + location.pathname, on ? "other" : "normal"); } catch (e) {}
-};
+if (modeButton) {
+  const setMode = on => { document.documentElement.classList.toggle("other-mode", on); modeButton.setAttribute("aria-pressed", on); };
+  try { setMode(localStorage.getItem("site-mode:" + location.pathname) === "other"); } catch (e) {}
+  modeButton.onclick = () => {
+    const on = !document.documentElement.classList.contains("other-mode");
+    setMode(on);
+    try { localStorage.setItem("site-mode:" + location.pathname, on ? "other" : "normal"); } catch (e) {}
+  };
+}
 </script>`;
 
 const MENU_SCRIPT = `<script>

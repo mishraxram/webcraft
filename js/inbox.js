@@ -9,7 +9,33 @@ function renderMessage(message) {
   return item;
 }
 
+let inboxPollTimer = null;
+
+function isLocalHostName() {
+  return /^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname);
+}
+
+function fetchInboxMessages(list, status, auto) {
+  if (!isLocalHostName()) {
+    if (!auto) status.textContent = "The inbox needs the local server. Run npm start, then open http://localhost:3000.";
+    return;
+  }
+  fetch("/messages/" + siteFileName())
+    .then(response => response.json())
+    .then(answer => {
+      if (answer.error) { if (!auto) status.textContent = answer.error; return; }
+      const count = answer.messages.length;
+      status.textContent = count ? count + (count === 1 ? " message" : " messages") + ", newest first." + (auto ? " (auto-synced)" : "") : "No messages yet. Publish, then send one from the form on your site.";
+      list.replaceChildren();
+      answer.messages.forEach(message => list.append(renderMessage(message)));
+    })
+    .catch(() => {
+      if (!auto) status.textContent = "The local server is not running. Start it with npm start.";
+    });
+}
+
 function renderInbox() {
+  clearInterval(inboxPollTimer);
   const wrap = el("div", "inbox");
   const button = el("button", "", "Check messages");
   button.type = "button";
@@ -17,24 +43,21 @@ function renderInbox() {
   const list = el("ol", "inbox-list");
 
   button.onclick = () => {
-    list.replaceChildren();
-    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
-      status.textContent = "The inbox needs the local server. Run npm start, then open http://localhost:3000.";
-      return;
-    }
     button.disabled = true;
     status.textContent = "Loading...";
-    fetch("/messages/" + siteFileName())
-      .then(response => response.json())
-      .then(answer => {
-        if (answer.error) { status.textContent = answer.error; return; }
-        const count = answer.messages.length;
-        status.textContent = count ? count + (count === 1 ? " message" : " messages") + ", newest first." : "No messages yet. Publish, then send one from the form on your site.";
-        answer.messages.forEach(message => list.append(renderMessage(message)));
-      })
-      .catch(() => { status.textContent = "The local server is not running. Start it with npm start."; })
-      .finally(() => { button.disabled = false; });
+    fetchInboxMessages(list, status, false);
+    setTimeout(() => { button.disabled = false; }, 500);
   };
+
+  if (isLocalHostName()) {
+    inboxPollTimer = setInterval(() => {
+      if (document.body.contains(wrap)) {
+        fetchInboxMessages(list, status, true);
+      } else {
+        clearInterval(inboxPollTimer);
+      }
+    }, 4000);
+  }
 
   wrap.append(el("h2", "", "Inbox"), el("p", "help", "Published sites have a message form. Messages from visitors are saved on this computer and show here."), button, status, list);
   return wrap;

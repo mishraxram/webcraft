@@ -24,7 +24,17 @@ function renderGallery(input, id) {
   const tools = el("div", "gallery-tools");
   const grid = el("div", "gallery-grid");
   const count = el("p", "gallery-count");
-  const empty = el("p", "gallery-empty", "No template matches. Try another word or pick All.");
+  const empty = el("div", "gallery-empty");
+  const emptyText = el("span", "", "No template matches. ");
+  const clearBtn = el("button", "chip", "Clear filters");
+  clearBtn.type = "button";
+  clearBtn.onclick = () => {
+    galleryLayout = "all";
+    gallerySearch = "";
+    search.value = "";
+    applyFilters();
+  };
+  empty.append(emptyText, clearBtn);
   const sample = thumbState();
 
   const tiles = TEMPLATES.map((template, i) => {
@@ -46,7 +56,19 @@ function renderGallery(input, id) {
     const thumb = el("span", "thumb");
     thumb.append(frame);
 
-    tile.append(radio, thumb, el("span", "tile-name", template.name));
+    const theme = THEMES.find(th => th.id === template.themeId);
+    const swatches = el("span", "tile-swatches");
+    if (theme) {
+      ["bg", "text", "accent"].forEach(k => {
+        const dot = el("span", "tile-swatch");
+        dot.style.background = theme.colors[k];
+        swatches.append(dot);
+      });
+    }
+    const tileMeta = el("span", "tile-meta");
+    tileMeta.append(el("span", "tile-name", template.name), swatches);
+
+    tile.append(radio, thumb, tileMeta);
     tile.template = template;
     grid.append(tile);
     return tile;
@@ -85,7 +107,14 @@ function renderGallery(input, id) {
     let shown = 0;
     tiles.forEach(tile => {
       const t = tile.template;
-      tile.hidden = !((galleryLayout === "all" || t.layoutId === galleryLayout) && t.name.toLowerCase().includes(words));
+      const theme = THEMES.find(th => th.id === t.themeId);
+      const isDark = theme && theme.dark;
+      const matchesWord = !words || t.name.toLowerCase().includes(words) ||
+        (words === "dark" && isDark) ||
+        (words === "light" && !isDark) ||
+        (theme && theme.headingFont && theme.headingFont.toLowerCase().includes(words)) ||
+        (t.layoutId && t.layoutId.toLowerCase().includes(words));
+      tile.hidden = !((galleryLayout === "all" || t.layoutId === galleryLayout) && matchesWord);
       if (!tile.hidden) shown++;
     });
     chips.forEach(chip => chip.setAttribute("aria-pressed", chip.layoutId === galleryLayout));

@@ -1,5 +1,12 @@
+function normalizeHex(hex) {
+  let clean = String(hex || "").trim().replace(/^#/, "");
+  if (clean.length === 3) clean = clean.split("").map(c => c + c).join("");
+  return "#" + (clean.length === 6 ? clean : "000000");
+}
+
 function luminance(hex) {
-  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+  const full = normalizeHex(hex);
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(full.slice(i, i + 2), 16) / 255)
     .map(v => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
@@ -15,7 +22,7 @@ function checkSite(state) {
   const c = siteTheme(state).colors;
 
   doc.querySelectorAll("img").forEach(img => {
-    if (!img.getAttribute("alt")) problems.push("An image has no alt text, so screen readers cannot describe it.");
+    if (!img.hasAttribute("alt")) problems.push("An image has no alt text, so screen readers cannot describe it.");
   });
   doc.querySelectorAll("a").forEach(link => {
     if (!link.textContent.trim()) problems.push("A link has no text, so people cannot tell where it goes.");
@@ -25,8 +32,9 @@ function checkSite(state) {
       const ratio = contrast(fg, bg);
       if (ratio < 4.5) problems.push(name + " is hard to read: contrast " + ratio.toFixed(1) + ":1, needs 4.5:1. Try another color theme.");
     });
-  if (!doc.querySelector("h1").textContent.trim()) problems.push("The page has no main heading. Add a headline in step 6.");
-  if (!state.seo.description.trim()) problems.push("No page description. Add one in step 11 so search results show it.");
+  const h1 = doc.querySelector("h1");
+  if (!h1 || !h1.textContent.trim()) problems.push("The page has no main heading. Add a headline in step 6.");
+  if (!state.seo || !state.seo.description || !state.seo.description.trim()) problems.push("No page description. Add one in step 11 so search results show it.");
   return problems;
 }
 

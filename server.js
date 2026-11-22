@@ -16,9 +16,18 @@ function isSafeName(name) {
 }
 
 function wifiAddress() {
-  const all = Object.values(os.networkInterfaces()).flat();
-  const found = all.find(a => a.family === "IPv4" && !a.internal);
-  return found ? found.address : "";
+  const interfaces = os.networkInterfaces();
+  const candidates = [];
+  for (const [name, addrs] of Object.entries(interfaces)) {
+    if (/docker|veth|br-|tun|tap|virbr|tailscale/i.test(name)) continue;
+    for (const a of addrs) {
+      if (a.family === "IPv4" && !a.internal) {
+        if (/^192\.168\./.test(a.address)) return a.address;
+        candidates.push(a.address);
+      }
+    }
+  }
+  return candidates[0] || "";
 }
 
 function onlyThisComputer(req, res, next) {
@@ -34,10 +43,15 @@ function clean(value, max) {
 function readMessages(name) {
   const file = path.join(MESSAGES_DIR, name + ".json");
   if (!fs.existsSync(file)) return [];
-  return JSON.parse(fs.readFileSync(file, "utf8"));
+  try {
+    const raw = fs.readFileSync(file, "utf8").trim();
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
 }
 
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "25mb" }));
 
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 app.use("/css", express.static(path.join(__dirname, "css")));

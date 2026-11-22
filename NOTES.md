@@ -129,3 +129,7 @@
 ## Working contact form and Inbox
 - What: a published site gets a message form (name, email or phone, message); the Express server checks it and saves it to messages/<site>.json, and "Check messages" on the review step lists them, newest first.
 - Why: it turns the static site into a real client-server app; messages live outside sites/ so no one can read them by URL, only this computer can open the inbox, and downloaded sites have no form because there is no server behind them.
+
+## Presentation polish, crash hardening, and Quick Demo
+- What: added 1-click Quick Demo and View Code inspector modal; live 4s auto-polling for incoming inbox messages; fixed a11y null crashes on h1 and seo.description; fixed downloadZIP style regex and safe anchor saving; non-destructive skipStep(); rail navigation unlock across visited steps; gallery grid alignment and palette swatches; 25MB server payload limit and smart Wi-Fi IP discovery.
+- Why: guarantees zero crashes and high-speed demonstration for tomorrow's B.Tech mini project presentation and viva defense.

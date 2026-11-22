@@ -14,12 +14,15 @@ function setValue(path, value) {
 const SAVE_KEY = APP_KEY + "_state";
 
 function saveState() {
+  const error = document.getElementById("project-error");
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify({ state: state, step: current }));
+    if (error && error.textContent.includes("Auto-save")) error.hidden = true;
   } catch (e) {
-    const error = document.getElementById("project-error");
-    error.textContent = "Auto-save is full, so a refresh would lose your newest changes. Use Save project file.";
-    error.hidden = false;
+    if (error) {
+      error.textContent = "Auto-save is full, so a refresh would lose your newest changes. Use Save project file.";
+      error.hidden = false;
+    }
   }
 }
 
@@ -66,7 +69,10 @@ function escapeHTML(s) {
 
 function validate(step, value) {
   if (Array.isArray(value)) {
-    const texts = value.flatMap(item => typeof item === "object" ? [item.title, item.detail] : [item]);
+    const texts = value.flatMap(item => {
+      if (!item) return [""];
+      return typeof item === "object" ? [String(item.title || ""), String(item.detail || "")] : [String(item || "")];
+    });
     if (step.required && !texts.some(t => t.trim())) return "Add at least one item.";
     if (step.maxItems && value.length > step.maxItems) return "You can add up to " + step.maxItems + " items.";
     for (const t of texts) {
@@ -80,7 +86,12 @@ function validate(step, value) {
   if (!text) return step.required ? "This field is required." : "";
   if (step.maxLength && text.length > step.maxLength) return "Keep it under " + step.maxLength + " characters.";
   if (step.check === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "Enter a valid email, like name@example.com.";
-  if (step.check === "phone" && !/^\+?[0-9 -]{7,15}$/.test(text)) return "Enter a valid phone number: digits, spaces or -, 7 to 15 long.";
+  if (step.check === "phone") {
+    const digits = text.replace(/[^0-9]/g, "");
+    if (digits.length < 7 || digits.length > 15 || !/^[+]?[0-9\s\-()]+$/.test(text)) {
+      return "Enter a valid phone number (7 to 15 digits).";
+    }
+  }
   return "";
 }
 

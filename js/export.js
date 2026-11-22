@@ -15,8 +15,13 @@ function saveFile(blob, fileName) {
   const link = el("a");
   link.href = URL.createObjectURL(blob);
   link.download = fileName;
+  link.style.display = "none";
+  document.body.appendChild(link);
   link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  setTimeout(() => {
+    URL.revokeObjectURL(link.href);
+    link.remove();
+  }, 1000);
 }
 
 function downloadHTML() {
@@ -25,12 +30,15 @@ function downloadHTML() {
 
 function downloadZIP() {
   const html = buildSite(state);
-  const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
-  const page = html.replace(/<style>[\s\S]*?<\/style>/, '<link rel="stylesheet" href="style.css">');
+  const match = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+  const css = match ? match[1].trim() : "";
+  const page = match
+    ? html.replace(/<style[^>]*>[\s\S]*?<\/style>/i, '<link rel="stylesheet" href="style.css">')
+    : html;
 
   const zip = new JSZip();
   zip.file("index.html", page);
-  zip.file("style.css", css.trim() + "\n");
+  zip.file("style.css", css + "\n");
   zip.file("README.txt", ZIP_README);
   return zip.generateAsync({ type: "blob" }).then(blob => saveFile(blob, siteFileName() + ".zip"));
 }
@@ -65,9 +73,58 @@ function importProject(file, done) {
   });
 }
 
+const DEMO_PROJECT = {
+  siteName: "Aura Studio",
+  siteType: "portfolio",
+  templateId: "split-paper",
+  themeId: "paper",
+  fontStyle: "serif",
+  menuItems: ["Home", "Projects", "About", "Contact"],
+  heroTitle: "Thoughtful architectural design & minimal spaces",
+  heroText: "Based in Pune. Crafting timeless residential environments, bespoke interiors, and sustainable buildings.",
+  about: "We are an independent architecture and design studio founded in 2024. We believe in simplicity, natural textures, and light-filled spaces. Every project balances functional clarity with sustainable materials.",
+  cards: [
+    { title: "Kanso Residence", detail: "Minimalist urban apartment renovation with natural teak and textured lime plaster." },
+    { title: "Artisan Coffee Roasters", detail: "Brand identity, packaging design, and interior space planning for craft roastery." },
+    { title: "The Courtyard House", detail: "Sustainable suburban villa with central passive cooling and rainwater harvesting." }
+  ],
+  contact: {
+    email: "hello@aurastudio.in",
+    phone: "+91 98765 43210",
+    whatsapp: "+91 98765 43210",
+    address: "Bhandarkar Road, Pune, Maharashtra 411004"
+  },
+  footer: "Aura Studio • 2026",
+  social: {
+    instagram: "https://instagram.com/aurastudio",
+    linkedin: "https://linkedin.com/company/aura-studio",
+    github: "https://github.com/mishraxram"
+  },
+  seo: {
+    title: "Aura Studio — Architecture & Interior Design",
+    description: "Independent architecture studio in Pune crafting timeless spaces, minimal residences, and thoughtful environments."
+  },
+  logo: "",
+  heroImage: "",
+  aboutImage: "",
+  madeWith: false
+};
+
 function setupProjectTools() {
   const error = document.getElementById("project-error");
   const fileInput = document.getElementById("import-file");
+  const demoBtn = document.getElementById("demo-btn");
+  if (demoBtn) {
+    demoBtn.onclick = () => {
+      applySaved(JSON.parse(DEFAULT_STATE));
+      applySaved(DEMO_PROJECT);
+      current = STEPS.length - 1;
+      errors = {};
+      render();
+      saveState();
+      scheduleRecord();
+    };
+  }
   document.getElementById("export-btn").onclick = exportProject;
   document.getElementById("import-btn").onclick = () => fileInput.click();
   fileInput.onchange = () => {
@@ -153,7 +210,7 @@ function renderExport() {
     error.hidden = true;
     result.replaceChildren();
     wrap.querySelectorAll(".phone-share").forEach(old => old.remove());
-    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
+    if (!/^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
     publishButton.disabled = true;
     publishSite()
       .then(answer => {

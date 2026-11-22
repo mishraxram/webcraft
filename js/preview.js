@@ -39,12 +39,33 @@ function openFullScreen() {
   box.setAttribute("role", "dialog");
   box.setAttribute("aria-modal", "true");
   box.setAttribute("aria-label", "Full screen preview");
+
+  const bar = el("div", "fullview-bar");
+  bar.style.display = "flex";
+  bar.style.justifyContent = "space-between";
+  bar.style.alignItems = "center";
+  bar.style.padding = "8px 16px";
+  bar.style.background = "var(--ink)";
+  bar.style.color = "var(--paper)";
+  bar.style.fontFamily = "var(--mono)";
+  bar.style.fontSize = "0.8125rem";
+
+  const title = el("span", "", siteFileName() + ".html — Full Screen Preview");
   const close = el("button", "chip", "Close (Esc)");
   close.type = "button";
+  close.style.background = "var(--paper)";
+  close.style.color = "var(--ink)";
+
+  bar.append(title, close);
+
   const frame = el("iframe");
   frame.title = "Full screen preview of your site";
   frame.setAttribute("sandbox", "allow-scripts");
   frame.srcdoc = buildSite(state);
+  frame.style.width = "100%";
+  frame.style.height = "calc(100vh - 42px)";
+  frame.style.border = "0";
+
   const shut = () => {
     box.remove();
     document.body.classList.remove("no-scroll");
@@ -52,10 +73,58 @@ function openFullScreen() {
   };
   close.onclick = shut;
   box.addEventListener("keydown", e => { if (e.key === "Escape") shut(); });
-  box.append(close, frame);
+  frame.addEventListener("load", () => {
+    try {
+      frame.contentWindow.addEventListener("keydown", e => { if (e.key === "Escape") shut(); });
+    } catch (e) {}
+  });
+
+  box.append(bar, frame);
   document.body.append(box);
   document.body.classList.add("no-scroll");
   close.focus();
+}
+
+function openCodeModal() {
+  const modal = el("div", "code-modal");
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "Generated HTML Source");
+
+  const card = el("div", "code-modal-card");
+  const bar = el("div", "code-modal-bar");
+  bar.append(el("span", "", siteFileName() + ".html — Clean Semantic HTML5 Source (<70 KB)"));
+
+  const copyBtn = el("button", "", "Copy HTML");
+  copyBtn.type = "button";
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(buildSite(state)).then(() => {
+      copyBtn.textContent = "Copied to Clipboard!";
+      setTimeout(() => { copyBtn.textContent = "Copy HTML"; }, 2000);
+    });
+  };
+
+  const closeBtn = el("button", "", "Close (Esc)");
+  closeBtn.type = "button";
+  const shut = () => { modal.remove(); const b = document.getElementById("viewcode-btn"); if (b) b.focus(); };
+  closeBtn.onclick = shut;
+
+  const actions = el("div");
+  actions.style.display = "flex";
+  actions.style.gap = "8px";
+  actions.append(copyBtn, closeBtn);
+  bar.append(actions);
+
+  const body = el("div", "code-modal-body");
+  const pre = el("pre", "", buildSite(state));
+  body.append(pre);
+
+  card.append(bar, body);
+  modal.append(card);
+  modal.addEventListener("keydown", e => { if (e.key === "Escape") shut(); });
+  modal.onclick = e => { if (e.target === modal) shut(); };
+  document.body.append(modal);
+  closeBtn.focus();
 }
 
 function setupPreview() {
@@ -72,6 +141,8 @@ function setupPreview() {
     bar.append(button);
   });
   document.getElementById("fullscreen-btn").onclick = openFullScreen;
+  const viewCodeBtn = document.getElementById("viewcode-btn");
+  if (viewCodeBtn) viewCodeBtn.onclick = openCodeModal;
   new ResizeObserver(fitPreview).observe(document.getElementById("preview-stage"));
 
   const wizard = document.getElementById("wizard");
