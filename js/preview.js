@@ -97,11 +97,33 @@ function openCodeModal() {
 
   const copyBtn = el("button", "", "Copy HTML");
   copyBtn.type = "button";
+  const fallbackCopy = text => {
+    const ta = el("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.append(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      copyBtn.textContent = "Copied to Clipboard!";
+    } catch (e) {
+      copyBtn.textContent = "Copy failed";
+    }
+    ta.remove();
+    setTimeout(() => { copyBtn.textContent = "Copy HTML"; }, 2000);
+  };
   copyBtn.onclick = () => {
-    navigator.clipboard.writeText(buildSite(state)).then(() => {
+    const code = buildSite(state);
+    const feedback = () => {
       copyBtn.textContent = "Copied to Clipboard!";
       setTimeout(() => { copyBtn.textContent = "Copy HTML"; }, 2000);
-    });
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(feedback).catch(() => fallbackCopy(code));
+    } else {
+      fallbackCopy(code);
+    }
   };
 
   const closeBtn = el("button", "", "Close (Esc)");

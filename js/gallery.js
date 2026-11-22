@@ -97,7 +97,7 @@ function renderGallery(input, id) {
     const tile = visible[Math.floor(Math.random() * visible.length)];
     const radio = tile.querySelector("input");
     radio.checked = true;
-    radio.onchange();
+    radio.dispatchEvent(new Event("change", { bubbles: true }));
     radio.focus();
     tile.scrollIntoView({ block: "nearest" });
   };

@@ -12,7 +12,7 @@ function renderMessage(message) {
 let inboxPollTimer = null;
 
 function isLocalHostName() {
-  return /^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname);
+  return /^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1)$/.test(location.hostname);
 }
 
 function fetchInboxMessages(list, status, auto) {
@@ -21,11 +21,22 @@ function fetchInboxMessages(list, status, auto) {
     return;
   }
   fetch("/messages/" + siteFileName())
-    .then(response => response.json())
+    .then(response => {
+      if (response.status === 403) {
+        clearInterval(inboxPollTimer);
+        if (!auto) status.textContent = "Only the computer running the server can view the inbox.";
+        return null;
+      }
+      return response.json();
+    })
     .then(answer => {
-      if (answer.error) { if (!auto) status.textContent = answer.error; return; }
+      if (!answer) return;
+      if (answer.error || !Array.isArray(answer.messages)) {
+        if (!auto) status.textContent = answer.error || "Could not read messages.";
+        return;
+      }
       const count = answer.messages.length;
-      status.textContent = count ? count + (count === 1 ? " message" : " messages") + ", newest first." + (auto ? " (auto-synced)" : "") : "No messages yet. Publish, then send one from the form on your site.";
+      status.textContent = count ? count + (count === 1 ? " message" : " messages") + ", newest first." + (auto ? " (live synced)" : "") : "No messages yet. Publish, then send one from the form on your site.";
       list.replaceChildren();
       answer.messages.forEach(message => list.append(renderMessage(message)));
     })
@@ -50,6 +61,7 @@ function renderInbox() {
   };
 
   if (isLocalHostName()) {
+    fetchInboxMessages(list, status, true);
     inboxPollTimer = setInterval(() => {
       if (document.body.contains(wrap)) {
         fetchInboxMessages(list, status, true);

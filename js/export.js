@@ -210,7 +210,7 @@ function renderExport() {
     error.hidden = true;
     result.replaceChildren();
     wrap.querySelectorAll(".phone-share").forEach(old => old.remove());
-    if (!/^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
+    if (!/^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1)$/.test(location.hostname)) return showError("Publish needs the local server. Run npm start, then open http://localhost:3000. Online, use Download.");
     publishButton.disabled = true;
     publishSite()
       .then(answer => {

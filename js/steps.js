@@ -97,17 +97,11 @@ function applyTypeDefaults() {
   if (defaults && untouched) state.menuItems = defaults.menu.slice();
 }
 
-let maxVisited = 0;
-
 function renderRail() {
-  maxVisited = Math.max(maxVisited, current);
   const list = el("ol", "rail");
   STEPS.forEach((step, i) => {
-    const isNow = i === current;
-    const isDone = i < current;
-    const isVisited = i <= maxVisited;
-    const item = el("li", isDone ? "done" : isNow ? "now" : isVisited ? "visited" : "");
-    if (isVisited && !isNow) {
+    const item = el("li", i < current ? "done" : i === current ? "now" : "");
+    if (i < current) {
       const jump = el("button", "", step.title);
       jump.type = "button";
       jump.onclick = () => { errors = {}; current = i; render(); };
@@ -115,7 +109,7 @@ function renderRail() {
     } else {
       item.textContent = step.title;
     }
-    if (isNow) item.setAttribute("aria-current", "step");
+    if (i === current) item.setAttribute("aria-current", "step");
     list.append(item);
   });
   return list;
