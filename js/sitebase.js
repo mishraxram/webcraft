@@ -19,16 +19,17 @@ header nav a:hover, aside nav a:hover { color: var(--accent); text-decoration-co
 
 .btn { display: inline-flex; align-items: center; gap: 0.6em; background: var(--accent); color: var(--on-accent);
   text-decoration: none; font-weight: bold; padding: calc(var(--s) * 0.75) calc(var(--s) * 1.5); border-radius: var(--r);
-  transition: background-color 0.2s, color 0.2s; }
-.btn:hover { background: var(--text); color: var(--bg); }
-.btn svg { transition: transform 0.2s ease-out; }
-.btn:hover svg { transform: translateX(4px); }
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, color 0.2s, box-shadow 0.25s; }
+.btn:hover { background: var(--text); color: var(--bg); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.btn:active { transform: translateY(0); }
+.btn svg { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.btn:hover svg { transform: translateX(5px); }
 
 :where(.btn-outline) .btn { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px currentColor; }
 :where(.btn-outline) .btn:hover { background: var(--text); color: var(--bg); }
 :where(.btn-underline) .btn { background: transparent; color: var(--text); padding: 4px 0; border-radius: 0;
   border-bottom: 2px solid var(--accent); }
-:where(.btn-underline) .btn:hover { background: transparent; color: var(--accent); }
+:where(.btn-underline) .btn:hover { background: transparent; color: var(--accent); box-shadow: none; }
 .caps h2 { font-family: var(--body); font-size: 0.875rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.16em; }
 
 .contact { list-style: none; padding: 0; }
@@ -42,13 +43,18 @@ header nav a:hover, aside nav a:hover { color: var(--accent); text-decoration-co
 .message-form input:focus, .message-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 .message-form .btn { justify-self: start; border: 0; font: inherit; cursor: pointer; }
 .message-form .btn:disabled { opacity: 0.5; cursor: wait; }
+.cards li { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s; }
+.cards li:hover { transform: translateY(-4px); }
 .cards h3 { transition: color 0.2s; }
 .cards li:hover h3 { color: var(--accent); }
 
 .logo { height: 1.5em; width: auto; vertical-align: middle; margin-right: 0.5em; }
 .monogram { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; background: var(--accent); color: var(--on-accent);
   font-family: var(--head); font-size: 0.85em; font-weight: bold; letter-spacing: 0; border-radius: min(var(--r), 8px); }
-.hero-img, .about-img, .card-img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: min(var(--r), 12px); }
+.hero-img, .about-img, .card-img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: min(var(--r), 12px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.hero-img:hover, .about-img:hover { transform: scale(1.015); }
+.cards li:hover .card-img { transform: scale(1.035); }
 .hero h1 + .btn { margin-top: calc(var(--s) * 2); }
 .hero-img { aspect-ratio: 16 / 9; margin-top: calc(var(--s) * 2); }
 .about-img { aspect-ratio: 4 / 3; max-width: 28rem; margin-bottom: var(--s); }
@@ -83,16 +89,16 @@ footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom
 
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
-  .hero > * { animation: rise 0.6s ease-out both; }
+  .hero > * { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
   .hero > :nth-child(2) { animation-delay: 0.08s; }
   .hero > :nth-child(3) { animation-delay: 0.16s; }
   .hero > :nth-child(n+4) { animation-delay: 0.24s; }
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1); }
   .reveal.in { opacity: 1; transform: none; }
-  .strip-track { animation: slide 40s linear infinite; }
+  .strip-track { animation: slide 32s linear infinite; }
 }
 @keyframes slide { to { transform: translateX(-50%); } }
-@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
 
 .menu-btn { display: none; font: inherit; font-size: 0.875rem; background: none; color: var(--text); cursor: pointer;
   border: 1px solid var(--line); border-radius: min(var(--r), 8px); padding: 4px 12px; }

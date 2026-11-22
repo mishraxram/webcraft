@@ -80,7 +80,7 @@ header nav a { margin-left: var(--s); color: var(--muted); }
 .hero h1 { font-size: 1.75rem; line-height: 1.3; font-weight: normal; }
 .hero p { color: var(--muted); margin: var(--s) 0 calc(var(--s) * 2); }
 .btn { background: none; color: var(--accent); padding: 0; border-radius: 0; border-bottom: 1px solid var(--accent); }
-.btn:hover { background: none; color: var(--text); }
+.btn:hover { background: none; color: var(--text); box-shadow: none; }
 #contact .cta { font-size: 1.75rem; font-weight: normal; font-style: italic; }
 section { margin-top: calc(var(--s) * 6); }
 h2 { font-family: var(--body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em;
