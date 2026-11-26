@@ -60,7 +60,7 @@ function openFullScreen() {
 
   const frame = el("iframe");
   frame.title = "Full screen preview of your site";
-  frame.setAttribute("sandbox", "allow-scripts");
+  frame.setAttribute("sandbox", "allow-scripts allow-popups allow-popups-to-escape-sandbox");
   frame.srcdoc = buildSite(state);
   frame.style.width = "100%";
   frame.style.height = "calc(100vh - 42px)";

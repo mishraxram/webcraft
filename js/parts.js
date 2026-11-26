@@ -70,7 +70,7 @@ function contactHTML(state) {
   const rows = [];
   if (c.email.trim()) rows.push(`<li class="email"><a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a></li>`);
   if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
-  if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}">WhatsApp</a></li>`);
+  if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}" target="_blank" rel="noopener">WhatsApp</a></li>`);
   if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
   if (!rows.length && !state.inbox) return "";
   const list = rows.length ? `<ul class="contact">${rows.join("")}</ul>` : "";
@@ -110,7 +110,7 @@ function fontFaceCSS(theme) {
 
 function whatsappHTML(state) {
   const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
-  return number ? `<a class="wa" href="https://wa.me/${number}">WhatsApp</a>` : "";
+  return number ? `<a class="wa" href="https://wa.me/${number}" target="_blank" rel="noopener">WhatsApp</a>` : "";
 }
 
 function colorVars(c) {

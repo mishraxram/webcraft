@@ -106,7 +106,7 @@ const DEMO_PROJECT = {
   contact: {
     email: "reservations@saffronhearth.in",
     phone: "+91 98765 43210",
-    whatsapp: "+91 98765 43210",
+    whatsapp: "+91 85283 03820",
     address: "Lane 7, Koregaon Park, Pune, Maharashtra 411001"
   },
   footer: "The Saffron Hearth • Artisanal Indian Kitchen & Bar • Open Tue–Sun 12:00 PM – 11:30 PM",
