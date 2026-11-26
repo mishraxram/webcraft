@@ -116,6 +116,20 @@ function orderHTML(state, card) {
   return `<a class="order" href="https://wa.me/${number}?text=${escapeHTML(text)}" target="_blank" rel="noopener">Order now</a>`;
 }
 
+// On computers, WhatsApp links skip the wa.me page and open WhatsApp Web straight away.
+// Phones keep wa.me, which opens the WhatsApp app.
+const WA_SCRIPT = `<script>
+if (matchMedia("(pointer: fine)").matches) {
+  document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
+    const url = new URL(link.href);
+    const web = new URL("https://web.whatsapp.com/send");
+    web.searchParams.set("phone", url.pathname.slice(1));
+    if (url.searchParams.has("text")) web.searchParams.set("text", url.searchParams.get("text"));
+    link.href = web.href;
+  });
+}
+</script>`;
+
 function whatsappHTML(state) {
   const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
   return number ? `<a class="wa" href="https://wa.me/${number}" target="_blank" rel="noopener">WhatsApp</a>` : "";
@@ -148,6 +162,6 @@ ${SITE_CSS}
 ${css}
 </style></head>
 <body>${body.replace("</footer>", `<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button></footer>`)}${whatsappHTML(state)}
-${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${state.inbox ? FORM_SCRIPT : ""}</body></html>`;
+${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${WA_SCRIPT}${state.inbox ? FORM_SCRIPT : ""}</body></html>`;
 }
 
