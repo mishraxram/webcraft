@@ -102,3 +102,11 @@
 | 98 | 201st message | 429 "This inbox is full." | File stays at 200 | Pass |
 | 99 | Download HTML / ZIP | No form and no message script | No `<form`, no `/message/` | Pass |
 | 100 | Check messages with no messages yet | "No messages yet. Publish, then send one from the form on your site." | Text shown | Pass |
+| 101 | Quick Demo, click floating WhatsApp button (computer) | WhatsApp Web opens chat with +91 85283 03820 | Opened web.whatsapp.com chat with the number, logged-in account | Pass |
+| 102 | Same link on a phone (pointer: coarse) | wa.me link kept, opens WhatsApp app | Link stays https://wa.me/918528303820 | Pass |
+| 103 | Contact phone link | tel: link with the real number | tel:+918528303820 | Pass |
+| 104 | Add to order: 2 x Subz Dum Biryani, 1 x Paneer Tikka | Cart bar "3 items · ₹1,560", rows with − and + | "3 items · ₹1,560 · View order", 2 rows | Pass |
+| 105 | Fill name "Test Customer", table "Table 4", Send order | WhatsApp opens with full order, total, name and table typed | Message: 2 x Biryani ₹1,080, 1 x Paneer ₹480, Total ₹1,560, Name, Table 4 | Pass |
+| 106 | Press − until a dish reaches 0 | Dish removed; cart hides when empty | Paneer row removed (2 items · ₹1,080); at 0 items the cart disappears | Pass |
+| 107 | Dish name `<script>alert(1)</script>` with Add to order | Shown as text in card and cart, no script runs | Escaped as `&lt;script&gt;` in data-item, 0 script tags from the title | Pass |
+| 108 | Portfolio site (not restaurant) with WhatsApp number | No Add to order buttons, no cart | No `.add`, no `.cart`, no cart CSS | Pass |

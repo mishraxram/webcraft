@@ -137,3 +137,7 @@
 ## Order on WhatsApp + real demo photos
 Restaurant sites with a WhatsApp number get an "Order now" button on every menu card; it opens wa.me with "I want to order: <dish>" already typed.
 Quick Demo now uses real photos from Wikimedia Commons (credits in CREDITS.md), shrunk and embedded as base64 so the demo still works offline.
+
+## Cart and one WhatsApp order
+Restaurant sites with a WhatsApp number get "Add to order" on every dish, a cart with quantities and the ₹ total, and one button that opens WhatsApp with the full order, name and table already typed (js/order.js).
+Why: a real restaurant gets one clear order message instead of one message per dish, and it still needs no server or database.
