@@ -60,7 +60,7 @@ function cardsHTML(state) {
   const cards = state.cards.filter(card => card.title.trim() || card.detail.trim() || safeImage(card.image));
   if (!cards.length) return "";
   const items = cards.map(card =>
-    `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p></li>`).join("");
+    `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p>${orderHTML(state, card)}</li>`).join("");
   const heading = CARD_HEADINGS[state.siteType] || "Work";
   return `<section id="${slug(heading)}" class="work"><h2>${heading}</h2><ol class="cards">${items}</ol></section>`;
 }
@@ -106,6 +106,14 @@ function fontFaceCSS(theme) {
     .flatMap(family => FONT_FILES[family].map(([file, weight]) =>
       `@font-face { font-family: "${family}"; src: url(data:font/woff2;base64,${FONT_DATA[file]}) format("woff2"); font-weight: ${weight}; font-display: swap; }`))
     .join("\n");
+}
+
+// Restaurant sites: "Order now" opens WhatsApp with the order message already typed.
+function orderHTML(state, card) {
+  const number = state.contact.whatsapp.replace(/[^0-9]/g, "");
+  if (state.siteType !== "restaurant" || !number || !card.title.trim()) return "";
+  const text = encodeURIComponent(`Hi ${state.siteName}, I want to order: ${card.title.trim()}`);
+  return `<a class="order" href="https://wa.me/${number}?text=${escapeHTML(text)}" target="_blank" rel="noopener">Order now</a>`;
 }
 
 function whatsappHTML(state) {

@@ -65,6 +65,9 @@ html { scroll-padding-top: 5rem; }
 .to-top { color: inherit; }
 .wa { position: fixed; right: 16px; bottom: 16px; z-index: 2; background: var(--accent); color: var(--on-accent);
   padding: 10px 16px; border-radius: min(var(--r), 24px); text-decoration: none; font-weight: bold; }
+.order { display: inline-block; margin-top: calc(var(--s) * 0.5); padding: 8px 14px; border: 1px solid var(--accent);
+  border-radius: min(var(--r), 24px); color: var(--accent); text-decoration: none; font-weight: bold; }
+.order:hover, .order:focus-visible { background: var(--accent); color: var(--on-accent); }
 
 .hero .hero-art { display: none; margin: 0; max-width: none; font-family: var(--head); font-weight: bold; line-height: 0.8;
   letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--accent); user-select: none; }

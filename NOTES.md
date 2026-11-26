@@ -133,3 +133,7 @@
 ## Presentation polish, crash hardening, and Quick Demo
 - What: added 1-click Quick Demo and View Code inspector modal; live 4s auto-polling for incoming inbox messages; fixed a11y null crashes on h1 and seo.description; fixed downloadZIP style regex and safe anchor saving; non-destructive skipStep(); rail navigation unlock across visited steps; gallery grid alignment and palette swatches; 25MB server payload limit and smart Wi-Fi IP discovery.
 - Why: guarantees zero crashes and high-speed demonstration for tomorrow's B.Tech mini project presentation and viva defense.
+
+## Order on WhatsApp + real demo photos
+Restaurant sites with a WhatsApp number get an "Order now" button on every menu card; it opens wa.me with "I want to order: <dish>" already typed.
+Quick Demo now uses real photos from Wikimedia Commons (credits in CREDITS.md), shrunk and embedded as base64 so the demo still works offline.
