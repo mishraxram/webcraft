@@ -95,10 +95,15 @@ footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom
   .hero > :nth-child(n+4) { animation-delay: 0.24s; }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1); }
   .reveal.in { opacity: 1; transform: none; }
+  .reveal.in .cards > li { animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .reveal.in .cards > li:nth-child(2) { animation-delay: 0.08s; } .reveal.in .cards > li:nth-child(3) { animation-delay: 0.16s; }
+  .reveal.in .cards > li:nth-child(n+4) { animation-delay: 0.24s; }
+  .reveal.in img { animation: unveil 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
   .strip-track { animation: slide 32s linear infinite; }
 }
 @keyframes slide { to { transform: translateX(-50%); } }
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes unveil { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
 
 .menu-btn { display: none; font: inherit; font-size: 0.875rem; background: none; color: var(--text); cursor: pointer;
   border: 1px solid var(--line); border-radius: min(var(--r), 8px); padding: 4px 12px; }

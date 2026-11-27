@@ -143,6 +143,8 @@ function renderProgress() {
   const pad = n => String(n).padStart(2, "0");
   const box = document.getElementById("wizard");
   box.classList.toggle("turn", box.dataset.step !== String(current));
+  // Direction for the page-turn motion in motion.css
+  if (box.dataset.step !== String(current)) box.dataset.dir = current < Number(box.dataset.step) ? "back" : "next";
   box.dataset.step = current;
   const line = el("div", "progress");
   const big = el("span", "big-num", pad(current + 1));

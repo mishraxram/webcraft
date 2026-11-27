@@ -1,0 +1,41 @@
+/* motion.css - all builder movement in one place.
+   Short, quick moves (under 0.5s) that show what changed. Nothing moves if the
+   user's computer asks for less motion (prefers-reduced-motion). */
+
+/* Press feedback on every button */
+button:active:not(:disabled) { transform: translateY(1px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Masthead slides down once when the page opens */
+  body > header { animation: drop-in 0.5s var(--ease) both; }
+
+  /* Step turns like a page: Next comes from the right, Back from the left */
+  .turn[data-dir="next"] > * { animation-name: turn-next; }
+  .turn[data-dir="back"] > * { animation-name: turn-back; }
+
+  /* Choice cards arrive one after another; --i is the card number, set in app.js */
+  .turn .field > .option { animation: rise-in 0.4s var(--ease) both; animation-delay: calc(min(var(--i, 0), 14) * 25ms + 0.1s); }
+
+  /* The small square "stamps" when a card is picked */
+  .field > .option:has(input:checked)::after { animation: stamp 0.35s var(--ease); }
+
+  /* Template plates arrive in order; only the first 16 wait, so the list never feels slow */
+  .turn .tile { animation: rise-in 0.45s var(--ease) both; animation-delay: calc(min(var(--i, 0), 16) * 20ms); }
+
+  /* Wrong answer: the field gives a short shake */
+  .field.has-error input, .field.has-error textarea { animation: shake 0.3s var(--ease); }
+
+  /* Live proof: an accent line runs across the bar each time the preview changes, like a page printing */
+  .proof-bar { position: relative; overflow: hidden; }
+  .proof-bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left; }
+  .proof.printing .proof-bar::after { animation: print 0.6s var(--ease); }
+}
+
+@keyframes drop-in { from { opacity: 0; transform: translateY(-12px); } }
+@keyframes turn-next { from { opacity: 0; transform: translateX(24px); } }
+@keyframes turn-back { from { opacity: 0; transform: translateX(-24px); } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(10px); } }
+@keyframes stamp { 0% { transform: scale(0.2); } 60% { transform: scale(1.6); } 100% { transform: scale(1); } }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+@keyframes print { 0% { transform: scaleX(0); opacity: 1; } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }

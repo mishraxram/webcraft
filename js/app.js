@@ -88,6 +88,7 @@ function renderInput(input) {
       radio.checked = getValue(input.field) === option;
       radio.onchange = () => setValue(input.field, option);
       const optionLabel = el("label", "option");
+      optionLabel.style.setProperty("--i", i);
       optionLabel.append(radio, optionExtra(input.field, option), " " + option);
       wrap.append(optionLabel);
     });

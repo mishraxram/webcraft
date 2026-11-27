@@ -39,6 +39,7 @@ function renderGallery(input, id) {
 
   const tiles = TEMPLATES.map((template, i) => {
     const tile = el("label", "tile");
+    tile.style.setProperty("--i", i);
     const radio = el("input");
     radio.type = "radio";
     radio.name = id;

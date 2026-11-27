@@ -18,8 +18,13 @@ function updatePreview() {
   if (html === lastPreview) return;
   lastPreview = html;
   document.getElementById("proof-file").textContent = siteFileName() + ".html";
+  // Restart the "printing" line on the proof bar (motion.css); reading offsetWidth lets it play again
+  const proof = document.querySelector(".proof");
+  proof.classList.remove("printing");
+  void proof.offsetWidth;
+  proof.classList.add("printing");
   document.getElementById("preview-frame").srcdoc = html.replace("</head>",
-    "<style>.hero > *, .reveal { animation: none; opacity: 1; transform: none; transition: none; }</style></head>");
+    "<style>.hero > *, .reveal, .reveal * { animation: none; } .reveal { opacity: 1; transform: none; transition: none; }</style></head>");
 }
 
 function fitPreview() {

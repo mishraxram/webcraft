@@ -169,3 +169,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## More site types
 - Step 2 now has 14 types: the first 6 plus shop, clinic, gym, salon, coaching, nonprofit, photography and wedding. Each one is a single data object in js/categories.js (menu, sample text, card ideas, heading, Google type); a loop copies them into the existing tables.
 - Why: more people can start from text that fits them, and adding a type needs no new code, the same idea as templates = layouts x themes.
+
+## Motion
+- css/motion.css holds all builder motion: steps slide in from the side you are going, choice cards and template plates arrive in order, the picked square stamps, wrong fields shake, and an accent line "prints" across the proof bar when the preview changes. Generated sites now stagger their cards and unveil photos as you scroll.
+- Why: movement shows the user what just changed. Every move is under a second and turns off when the computer asks for reduced motion.

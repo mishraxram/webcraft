@@ -135,3 +135,7 @@
 | 131 | Step 2 | 14 site types, lettered A to N | Portfolio ... Photography, Wedding (A-N) | Pass |
 | 132 | Site type Gym, then Suggest text (Bold) on Headline | Gym menu and gym lines | Menu Home/Plans/About/Contact; "Fit Zone. No excuses." | Pass |
 | 133 | Build site for each of the 8 new types | Site builds, right Google type | All 8 build; gym has "@type":"ExerciseGym" and kicker "Train with us" | Pass |
+| 134 | Step 1 to 2 (Next), then 2 to 1 (Back) | Page slides in from the right, then from the left | data-dir next / back; animation turn-next / turn-back | Pass |
+| 135 | Next with empty site name | Field shakes, step does not turn again | animation shake; no turn class | Pass |
+| 136 | Type in any field | Accent line runs across the proof bar | .proof.printing, ::after animation print | Pass |
+| 137 | Computer set to reduce motion | No step, card or proof motion | All motion inside prefers-reduced-motion: no-preference | Pass |
