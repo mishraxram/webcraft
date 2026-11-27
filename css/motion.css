@@ -39,3 +39,16 @@ button:active:not(:disabled) { transform: translateY(1px); }
 @keyframes stamp { 0% { transform: scale(0.2); } 60% { transform: scale(1.6); } 100% { transform: scale(1); } }
 @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 @keyframes print { 0% { transform: scaleX(0); opacity: 1; } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+
+/* Quick Demo title sequence (demo.js): ink screen, site name, steps counting like film credits */
+.film { position: fixed; inset: 0; z-index: 50; display: grid; align-content: center; gap: 16px; padding: 64px;
+  background: var(--ink); color: var(--paper); cursor: pointer; animation: fade-in 0.2s var(--ease);
+  transition: clip-path 0.6s var(--ease); clip-path: inset(0); }
+.film.film-out { clip-path: inset(0 0 100% 0); }
+.film-name { margin: 0; font-family: var(--serif); font-size: clamp(3rem, 9vw, 8rem); line-height: 0.95; letter-spacing: -0.03em;
+  animation: film-name 0.9s var(--ease) both; }
+.film-title { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(1.25rem, 2.5vw, 2rem); color: var(--rule); }
+.film-count { margin: 0; font-family: var(--mono); font-size: 0.875rem; letter-spacing: 0.08em; color: var(--rule); }
+.film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.15s linear; }
+@keyframes film-name { from { clip-path: inset(0 0 100% 0); transform: translateY(24px); } to { clip-path: inset(0); } }

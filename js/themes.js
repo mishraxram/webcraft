@@ -1,11 +1,15 @@
 const FRAUNCES = '"Fraunces", Georgia, serif';
 const DMSANS = '"DM Sans", Arial, sans-serif';
 const MONO = '"JetBrains Mono", "Courier New", monospace';
+const PLAYFAIR = '"Playfair Display", Georgia, serif';
+const GROTESK = '"Space Grotesk", Arial, sans-serif';
 
 const FONT_STYLES = {
   serif: { headingFont: FRAUNCES, bodyFont: FRAUNCES },
   sans: { headingFont: DMSANS, bodyFont: DMSANS },
-  mono: { headingFont: MONO, bodyFont: DMSANS }
+  mono: { headingFont: MONO, bodyFont: DMSANS },
+  display: { headingFont: PLAYFAIR, bodyFont: DMSANS },
+  grotesk: { headingFont: GROTESK, bodyFont: GROTESK }
 };
 
 const THEMES = [
@@ -43,13 +47,13 @@ const THEMES = [
   { id: "saffron", name: "Saffron", headingFont: FRAUNCES, bodyFont: DMSANS, radius: 12, spacing: 20, button: "solid", caps: false,
     colors: { bg: "#FFF6EC", text: "#2A160B", muted: "#6B4E3A", accent: "#B4410C", onAccent: "#FFFFFF", line: "#EBD6C2" } },
 
-  { id: "emerald", name: "Emerald", dark: true, headingFont: FRAUNCES, bodyFont: DMSANS, radius: 4, spacing: 20, button: "outline", caps: false,
+  { id: "emerald", name: "Emerald", dark: true, headingFont: PLAYFAIR, bodyFont: DMSANS, radius: 4, spacing: 20, button: "outline", caps: false,
     colors: { bg: "#0E1A15", text: "#E8F0EA", muted: "#9FB3A8", accent: "#D4A24C", onAccent: "#0E1A15", line: "#24382F" } },
 
-  { id: "ivory", name: "Ivory", headingFont: FRAUNCES, bodyFont: FRAUNCES, radius: 0, spacing: 20, button: "underline", caps: true,
+  { id: "ivory", name: "Ivory", headingFont: PLAYFAIR, bodyFont: FRAUNCES, radius: 0, spacing: 20, button: "underline", caps: true,
     colors: { bg: "#FBF8F1", text: "#1F1B16", muted: "#5F574C", accent: "#7A5C14", onAccent: "#FFFFFF", line: "#1F1B16" } },
 
-  { id: "cobalt", name: "Cobalt", headingFont: DMSANS, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
+  { id: "cobalt", name: "Cobalt", headingFont: GROTESK, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
     colors: { bg: "#F4F6FB", text: "#0F1A3A", muted: "#4A5675", accent: "#1F4FD1", onAccent: "#FFFFFF", line: "#CBD3E6" } },
 
   { id: "espresso", name: "Espresso", dark: true, headingFont: FRAUNCES, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
@@ -58,10 +62,10 @@ const THEMES = [
   { id: "sage", name: "Sage", headingFont: FRAUNCES, bodyFont: DMSANS, radius: 4, spacing: 20, button: "outline", caps: false,
     colors: { bg: "#EEF1EA", text: "#23301F", muted: "#55624F", accent: "#4C6B2F", onAccent: "#FFFFFF", line: "#C8D1BF" } },
 
-  { id: "rose", name: "Rose", headingFont: FRAUNCES, bodyFont: FRAUNCES, radius: 12, spacing: 16, button: "solid", caps: false,
+  { id: "rose", name: "Rose", headingFont: PLAYFAIR, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
     colors: { bg: "#FBF1EE", text: "#2E1A17", muted: "#6E5450", accent: "#A8323F", onAccent: "#FFFFFF", line: "#E8D2CC" } },
 
-  { id: "swiss", name: "Swiss", headingFont: DMSANS, bodyFont: DMSANS, radius: 0, spacing: 12, button: "solid", caps: true,
+  { id: "swiss", name: "Swiss", headingFont: GROTESK, bodyFont: GROTESK, radius: 0, spacing: 12, button: "solid", caps: true,
     colors: { bg: "#FFFFFF", text: "#000000", muted: "#555555", accent: "#D0101F", onAccent: "#FFFFFF", line: "#000000" } }
 ];
 

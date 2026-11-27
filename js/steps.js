@@ -16,7 +16,7 @@ const STEPS = [
   { id: "theme", title: "Colors and font", help: "Optional. Leave as is to keep the template look.",
     fields: [
       { type: "mcq", field: "themeId", label: "Color theme", options: THEMES.map(theme => theme.id) },
-      { type: "mcq", field: "fontStyle", label: "Font style", options: ["serif", "sans", "mono"] }
+      { type: "mcq", field: "fontStyle", label: "Font style", options: ["serif", "sans", "mono", "display", "grotesk"] }
     ] },
 
   { id: "menu", title: "Menu items", help: "Up to 6 links in the top menu.",

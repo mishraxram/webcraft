@@ -14,3 +14,15 @@ Real photos from Wikimedia Commons, resized and embedded as base64 in `js/export
 | Mysore Pak | Mysore pak.jpg | Charles Haynes | CC BY-SA 2.0 |
 
 Source: https://commons.wikimedia.org/wiki/File:<file name>
+
+# Font credits
+
+All fonts are stored in `/fonts` and embedded in `js/fontdata.js`, so nothing loads from the internet. All use the SIL Open Font License 1.1 (licence files in `/fonts`).
+
+| Font | Used for |
+|---|---|
+| Fraunces | Builder headings, serif themes |
+| DM Sans | Builder body text, sans themes |
+| JetBrains Mono | Builder labels, mono font style |
+| Playfair Display | "Display" font style; Emerald, Ivory and Rose themes |
+| Space Grotesk | "Grotesk" font style; Cobalt and Swiss themes |

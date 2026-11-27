@@ -177,3 +177,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Premium templates
 - Two new layouts in js/layouts2.js: Showcase (huge headline, sticky section titles, numbered index rows) and Bento (sections as tiles on a 12-column grid, about 5 / cards 7). Eight new themes: Saffron, Emerald, Ivory, Cobalt, Espresso, Sage, Rose, Swiss. The gallery grows from 50 to 126 templates with no template written by hand.
 - Why: more looks to pick from; each new theme's colors were checked for 4.5:1 contrast first. Templates are original, not copied from the internet (CLAUDE.md rule).
+
+## Fonts, cinematic demo, cleanup
+- Two more local fonts (Playfair Display, Space Grotesk, both OFL) give two new font styles in step 4 and new looks for five themes. Quick Demo now opens with a short title sequence (site name, steps counting 01 to 12, wipe away) and shows the Showcase / Emerald template; demo data moved to js/demo.js. Every site's headline now rises out of a mask and the hero photo wipes in.
+- Why: the demo is the first thing examiners see, so it should look finished. Removed the unused test-layout.html and setup-project.js so the folder holds only files the project uses.

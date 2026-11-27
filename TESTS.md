@@ -143,3 +143,8 @@
 | 139 | Accessibility check on all 76 new templates (Showcase, Bento, 8 new themes), demo content | No contrast warning | 0 contrast warnings | Pass |
 | 140 | Showcase / Bento at 390 px | One column, no sideways scroll | scrollWidth 390 = width 390 | Pass |
 | 141 | Bento with 6 cards | First and last card full width, About tile stays in view | Rows 1 / 2 / 2 / 1; About sticky | Pass |
+| 142 | Click Quick Demo | Ink title screen: site name, steps 01 to 12 counting, then wipes up to the finished site | Film shown, "05 / 12 Menu items" mid-way, ends on Review with Showcase / Emerald | Pass |
+| 143 | Click the title screen or press any key | Title screen ends at once | Removed | Pass |
+| 144 | Step 4 font styles | 5 styles: serif, sans, mono, display, grotesk; new fonts load from /fonts | 5 options; Playfair Display and Space Grotesk "loaded" | Pass |
+| 145 | Accessibility check on all 126 templates with Display and with Grotesk font style | No contrast warning | 0 of 252 | Pass |
+| 146 | Downloaded site with Display style | Playfair embedded as base64, headline mask and photo wipe animations in the file | @font-face with data: URL, @keyframes title-in and wipe | Pass |

@@ -102,7 +102,10 @@ function footerHTML(state) {
 const FONT_FILES = {
   "Fraunces": [["fraunces-400", 400], ["fraunces-700", 700]],
   "DM Sans": [["dm-sans-400", 400], ["dm-sans-700", 700]],
-  "JetBrains Mono": [["jetbrains-mono-400", 400]]
+  "JetBrains Mono": [["jetbrains-mono-400", 400]],
+  // Variable fonts: one file holds every weight
+  "Playfair Display": [["playfair-display", "400 900"]],
+  "Space Grotesk": [["space-grotesk", "300 700"]]
 };
 
 function fontFaceCSS(theme) {

@@ -5,7 +5,7 @@
 
 const fs = require("fs");
 
-const files = ["fraunces-400", "fraunces-700", "dm-sans-400", "dm-sans-700", "jetbrains-mono-400"];
+const files = ["fraunces-400", "fraunces-700", "dm-sans-400", "dm-sans-700", "jetbrains-mono-400", "playfair-display", "space-grotesk"];
 
 const lines = files.map(name => {
   const base64 = fs.readFileSync("fonts/" + name + ".woff2").toString("base64");

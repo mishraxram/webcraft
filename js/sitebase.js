@@ -93,6 +93,8 @@ footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom
   .hero > :nth-child(2) { animation-delay: 0.08s; }
   .hero > :nth-child(3) { animation-delay: 0.16s; }
   .hero > :nth-child(n+4) { animation-delay: 0.24s; }
+  .hero h1 { animation: title-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.08s backwards; }
+  .hero .hero-img { animation: wipe 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards; }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1); }
   .reveal.in { opacity: 1; transform: none; }
   .reveal.in .cards > li { animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
@@ -103,6 +105,8 @@ footer .wordmark { flex-basis: 100%; width: 100%; max-width: none; margin-bottom
 }
 @keyframes slide { to { transform: translateX(-50%); } }
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes title-in { from { clip-path: inset(0 0 100% 0); transform: translateY(0.4em); } }
+@keyframes wipe { from { clip-path: inset(0 100% 0 0); transform: scale(1.06); } }
 @keyframes unveil { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
 
 .menu-btn { display: none; font: inherit; font-size: 0.875rem; background: none; color: var(--text); cursor: pointer;
