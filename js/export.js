@@ -86,7 +86,7 @@ function setupProjectTools() {
   const fileInput = document.getElementById("import-file");
   const demoBtn = document.getElementById("demo-btn");
   if (demoBtn) {
-    demoBtn.onclick = playDemo;
+    demoBtn.onclick = () => openDemoMenu(demoBtn);
   }
   document.getElementById("export-btn").onclick = exportProject;
   document.getElementById("import-btn").onclick = () => fileInput.click();

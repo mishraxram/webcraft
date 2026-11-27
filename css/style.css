@@ -48,6 +48,12 @@ body > header p { margin: 0; }
 .project-tools .quick-demo-btn { padding: 6px 12px; border: 1px solid var(--accent); background: var(--accent-wash); color: var(--accent-text); }
 .project-tools .quick-demo-btn:hover:not(:disabled) { background: var(--accent-text); color: var(--white); text-decoration-color: transparent; }
 #reset-btn { color: var(--accent-text); }
+
+/* Quick Demo menu: a printed index card of the 14 site types, two columns */
+.demo-menu { position: fixed; z-index: 30; width: 240px; display: grid; grid-template-columns: 1fr 1fr; padding: 8px; background: var(--field); border: 1px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.demo-menu-note { grid-column: 1 / -1; margin: 0 0 8px; padding: 0 8px 8px; border-bottom: 1px solid var(--rule); font: 11px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.demo-menu button { padding: 8px; border: 0; background: none; text-align: left; font: 14px/1.2 var(--sans); color: var(--ink); text-transform: capitalize; cursor: pointer; }
+.demo-menu button:hover, .demo-menu button:focus-visible { background: var(--accent-wash); color: var(--accent-text); }
 body > header .error { flex-basis: 100%; }
 
 .builder { display: grid; grid-template-columns: 200px minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; align-items: start; }

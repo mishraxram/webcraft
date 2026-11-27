@@ -193,3 +193,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Project report
 - docs/REPORT.md is the college report: abstract, flow chart, data flow, module list, six screenshots (cover, gallery, a step, review, generated site on desktop and phone), security, test summary, limitations, future scope.
 - Why: the Definition of Done asks for a report; screenshots were taken from the real builder with the demo project, and the WiFi publish test (row 88) was run for real instead of left for the viva.
+
+## A demo for every site type
+- Quick Demo now opens a small menu of all 14 site types. Each one loads a finished, realistic project (Indian business, real copy, its own layout and theme) with six real Commons photos. The 13 new demos live in js/demos/<type>.js and load only when picked, so the builder still opens fast.
+- Why: an examiner can see the tool fit a clinic, a gym or a wedding in one click, not only a restaurant; photos are CC licensed, credited in CREDITS.md and embedded so it works offline.

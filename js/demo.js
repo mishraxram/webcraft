@@ -57,9 +57,69 @@ const DEMO_PROJECT = {
   madeWith: false
 };
 
-function loadDemo() {
+// Every site type has a finished demo. Restaurant is built in (the cover needs it at once);
+// the others live in js/demos/<type>.js and load only when picked, so the builder opens fast.
+const DEMOS = { restaurant: DEMO_PROJECT };
+const DEMO_TYPES = ["restaurant", "shop", "clinic", "gym", "salon", "coaching", "business",
+  "portfolio", "photography", "wedding", "event", "blog", "student", "nonprofit"];
+// Same ?v= number as this file, so a new push never shows an old demo from the browser cache
+const DEMO_VERSION = new URL(document.currentScript.src).searchParams.get("v") || "1";
+
+function loadDemoFile(type, done) {
+  if (DEMOS[type]) return done(DEMOS[type]);
+  const script = document.createElement("script");
+  script.src = "js/demos/" + type + ".js?v=" + DEMO_VERSION;
+  script.onload = () => done(DEMOS[type]);
+  script.onerror = () => done(null);
+  document.head.append(script);
+}
+
+// Small menu under the Quick Demo button: one row per site type
+function openDemoMenu(button) {
+  const old = document.querySelector(".demo-menu");
+  if (old) return old.close();
+  const menu = el("div", "demo-menu");
+  menu.setAttribute("role", "menu");
+  menu.setAttribute("aria-label", "Pick a demo");
+  const note = el("p", "demo-menu-note", "Pick a site type");
+  menu.append(note);
+  DEMO_TYPES.forEach(type => {
+    const item = el("button", "", type);
+    item.type = "button";
+    item.setAttribute("role", "menuitem");
+    item.onclick = () => {
+      note.textContent = "Loading...";
+      loadDemoFile(type, project => {
+        if (!project) { note.textContent = "Could not load this demo."; return; }
+        menu.close();
+        playDemo(project);
+      });
+    };
+    menu.append(item);
+  });
+  const box = button.getBoundingClientRect();
+  menu.style.top = box.bottom + 8 + "px";
+  menu.style.left = Math.max(16, Math.min(box.left, innerWidth - 256)) + "px";
+
+  const outside = e => { if (!menu.contains(e.target) && !button.contains(e.target)) menu.close(); };
+  menu.close = () => {
+    menu.remove();
+    document.removeEventListener("pointerdown", outside);
+  };
+  menu.onkeydown = e => {
+    if (e.key !== "Escape") return;
+    e.stopPropagation();
+    menu.close();
+    button.focus();
+  };
+  document.addEventListener("pointerdown", outside);
+  document.body.append(menu);
+  menu.querySelector("button").focus();
+}
+
+function loadDemo(project) {
   applySaved(JSON.parse(DEFAULT_STATE));
-  applySaved(DEMO_PROJECT);
+  applySaved(project);
   current = STEPS.length - 1;
   errors = {};
   render();
@@ -67,15 +127,17 @@ function loadDemo() {
   scheduleRecord();
 }
 
-function playDemo() {
-  loadDemo();
+// project: a demo from DEMOS; anything else (a click event, nothing) plays the restaurant demo
+function playDemo(project) {
+  if (!project || !project.siteName) project = DEMO_PROJECT;
+  loadDemo(project);
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || document.querySelector(".film")) return;
   const film = el("div", "film");
   film.setAttribute("aria-hidden", "true");
   const count = el("p", "film-count");
   const title = el("p", "film-title");
   const bar = el("span", "film-bar");
-  film.append(el("p", "film-name", DEMO_PROJECT.siteName), title, count, bar);
+  film.append(el("p", "film-name", project.siteName), title, count, bar);
   document.body.append(film);
 
   let step = 0;

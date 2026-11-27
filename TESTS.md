@@ -158,3 +158,5 @@
 | 154 | Click the WebCraft name, then Watch the demo | Cover opens again; demo title sequence plays and ends on Review | Cover reopened; film shown, then removed; step 12 | Pass |
 | 155 | Cover at 390 px | Headline fits, proofs hidden, buttons stacked | Lines 343 = 343 px (no overflow) | Pass |
 | 156 | Reload with a saved project | Cover does not show, work continues | No cover | Pass |
+| 157 | Quick Demo, then pick each of the 14 site types | Menu shows 14 types; each loads its own finished site on step 12 with photos | All 14 loaded: right site type and name, step 12 / 12, 6 photos each, no console errors | Pass |
+| 158 | Quick Demo menu: Esc, click outside, click button again | Menu closes; Esc returns focus to the button | Closes all three ways | Pass |
