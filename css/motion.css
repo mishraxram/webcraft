@@ -52,3 +52,59 @@ button:active:not(:disabled) { transform: translateY(1px); }
 .film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--accent);
   transform: scaleX(0); transform-origin: left; transition: transform 0.15s linear; }
 @keyframes film-name { from { clip-path: inset(0 0 100% 0); transform: translateY(24px); } to { clip-path: inset(0); } }
+
+/* Cover screen (cover.js): magazine cover with three live template proofs */
+.cover { position: fixed; inset: 0; z-index: 40; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+  background: var(--paper); color: var(--ink); transition: clip-path 0.65s var(--ease); clip-path: inset(0); }
+.cover.cover-out { clip-path: inset(0 0 100% 0); }
+.cover-top { display: flex; justify-content: space-between; margin: 0; padding: 16px 32px; border-bottom: 1px solid var(--ink);
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.cover-main { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; align-items: center; padding: 32px 64px; min-height: 0; }
+.cover-kicker { margin: 0 0 16px; font-family: var(--mono); font-size: 0.8125rem; color: var(--accent-text); }
+.cover h1 { margin: 0; font-family: var(--serif); font-weight: 700; font-size: clamp(3rem, 7.5vw, 7.5rem); line-height: 0.95; letter-spacing: -0.035em; }
+.cover-line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.cover-line > * { display: block; }
+.cover h1 em { font-style: italic; color: var(--accent-text); }
+.cover-lede { max-width: 34rem; margin: 32px 0; font-size: 1.25rem; line-height: 1.5; }
+.cover-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+.cover-actions button { padding: 16px 32px; border: 1px solid var(--ink); font: inherit; font-size: 1.0625rem; cursor: pointer;
+  transition: transform 0.2s var(--ease), background-color 0.15s, color 0.15s, box-shadow 0.2s var(--ease); }
+.cover-start { background: var(--ink); color: var(--paper); }
+.cover-start::after { content: "\2192"; display: inline-block; margin-left: 12px; transition: transform 0.2s var(--ease); }
+.cover-start:hover::after { transform: translateX(6px); }
+.cover-demo { background: transparent; color: var(--ink); }
+.cover-actions button:hover { transform: translate(-3px, -3px); box-shadow: 3px 3px 0 var(--accent); }
+.cover-actions button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.cover-plates { position: relative; height: min(70vh, 560px); }
+/* --k = plate width / 1280 (the desktop width the template is drawn at) */
+.plate { --w: 300px; --k: 0.234375; position: absolute; top: 50%; left: 50%; width: var(--w); height: calc(var(--w) * 1.3); margin: 0;
+  border: 1px solid var(--ink); background: var(--white); box-shadow: 10px 10px 0 var(--ink); overflow: hidden;
+  translate: calc(-50% + (var(--i) - 1) * 150px) calc(-50% + (var(--i) - 1) * 24px); rotate: calc((var(--i) - 1) * 5deg);
+  transition: scale 0.3s var(--ease); }
+.plate:nth-child(2) { z-index: 1; }
+.plate:hover { scale: 1.04; z-index: 2; }
+.plate iframe { width: 1280px; height: 1664px; border: 0; pointer-events: none; transform: scale(var(--k)); transform-origin: 0 0; }
+.plate figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 6px 10px; background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.04em; }
+.cover-ticker { overflow: hidden; border-top: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+.cover-track { display: flex; width: max-content; padding: 12px 0; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.cover-track span { padding: 0 32px; }
+.cover-track span::after { content: "/"; padding-left: 64px; color: var(--accent); }
+@media (max-width: 900px) {
+  .cover-main { grid-template-columns: minmax(0, 1fr); padding: 32px; overflow-y: auto; }
+  .cover-plates { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cover-line > * { animation: line-up 0.9s var(--ease) both; animation-delay: calc(var(--i) * 0.09s + 0.1s); }
+  .cover-kicker, .cover-lede, .cover-actions { animation: rise-in 0.7s var(--ease) both; }
+  .cover-lede { animation-delay: 0.45s; }
+  .cover-actions { animation-delay: 0.55s; }
+  .plate { animation: plate-in 1s var(--ease) backwards, drift 6s ease-in-out infinite alternate;
+    animation-delay: calc(var(--i) * 0.12s + 0.3s), calc(var(--i) * -2s); }
+  .cover-track { animation: ticker 40s linear infinite; }
+}
+@keyframes line-up { from { transform: translateY(105%); } }
+@keyframes plate-in { from { opacity: 0; scale: 0.85; } }
+@keyframes drift { to { transform: translateY(-10px); } }
+@keyframes ticker { to { transform: translateX(-50%); } }

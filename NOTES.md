@@ -185,3 +185,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Finishing details on every template
 - All layouts now share DETAIL_CSS (js/parts.js): numbered section titles (01, 02...), prices like "(₹420)" moved onto the card title with a dotted leader like a printed menu, and a labelled contact grid. Showcase rows became menu lines with a square photo; Sidebar and Split keep the order button under the text.
 - Why: the templates looked plain because every card and contact line was the same paragraph; small print-style details make all 126 look designed, and nothing new is typed by the user.
+
+## Cover screen
+- js/cover.js shows a magazine-style cover on first visit: the headline rises line by line, three real templates (built live from the demo project) drift like proofs on a desk, and a ticker shows the real counts (templates, steps, site types). Start building, Watch the demo, Esc, or click the WebCraft name to open it again.
+- Why: the builder opened straight into a form, which looked plain; the cover shows what the tool makes before asking anything. It uses common product-page ideas (live product shots, staged reveal, ticker), drawn in our own editorial style, not copied from any site.

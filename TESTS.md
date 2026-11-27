@@ -153,3 +153,8 @@
 | 149 | Contact with phone, WhatsApp, address, hours | Labelled grid: Phone / WhatsApp / Address / Hours | 4 data-label rows, WhatsApp shows the number | Pass |
 | 150 | Accessibility check on all 126 templates after the detail changes | No contrast warning | 0 of 126 | Pass |
 | 151 | Sidebar layout, card with photo and Add to order | Button under the text, not squeezed in the photo column | Button left = title left (448 px) | Pass |
+| 152 | First visit (no saved project) | Cover: headline rises line by line, three live template proofs drift, stats ticker runs; Start building has focus | Cover shown, focus on Start building, 3 proofs built from the demo | Pass |
+| 153 | Start building / Esc | Cover wipes up; Start building focuses the Site name box | Cover removed; focus f-siteName; Esc closes too | Pass |
+| 154 | Click the WebCraft name, then Watch the demo | Cover opens again; demo title sequence plays and ends on Review | Cover reopened; film shown, then removed; step 12 | Pass |
+| 155 | Cover at 390 px | Headline fits, proofs hidden, buttons stacked | Lines 343 = 343 px (no overflow) | Pass |
+| 156 | Reload with a saved project | Cover does not show, work continues | No cover | Pass |
