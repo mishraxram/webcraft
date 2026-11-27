@@ -139,3 +139,7 @@
 | 135 | Next with empty site name | Field shakes, step does not turn again | animation shake; no turn class | Pass |
 | 136 | Type in any field | Accent line runs across the proof bar | .proof.printing, ::after animation print | Pass |
 | 137 | Computer set to reduce motion | No step, card or proof motion | All motion inside prefers-reduced-motion: no-preference | Pass |
+| 138 | Step 3 gallery | 126 templates, 8 layout chips | 126 / 126; All, Classic ... Showcase, Bento | Pass |
+| 139 | Accessibility check on all 76 new templates (Showcase, Bento, 8 new themes), demo content | No contrast warning | 0 contrast warnings | Pass |
+| 140 | Showcase / Bento at 390 px | One column, no sideways scroll | scrollWidth 390 = width 390 | Pass |
+| 141 | Bento with 6 cards | First and last card full width, About tile stays in view | Rows 1 / 2 / 2 / 1; About sticky | Pass |

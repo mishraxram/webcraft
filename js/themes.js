@@ -37,7 +37,32 @@ const THEMES = [
     colors: { bg: "#FFF8E7", text: "#222222", muted: "#5E5646", accent: "#7A5200", onAccent: "#FFFFFF", line: "#E5D9B8" } },
 
   { id: "night", name: "Night", dark: true, headingFont: DMSANS, bodyFont: DMSANS, radius: 4, spacing: 16, button: "outline", caps: true,
-    colors: { bg: "#10161C", text: "#DDE3E8", muted: "#93A1AD", accent: "#4FB3A9", onAccent: "#10161C", line: "#2A343D" } }
+    colors: { bg: "#10161C", text: "#DDE3E8", muted: "#93A1AD", accent: "#4FB3A9", onAccent: "#10161C", line: "#2A343D" } },
+
+  // Premium set: every pair checked for 4.5:1 contrast (text, muted, links, button text)
+  { id: "saffron", name: "Saffron", headingFont: FRAUNCES, bodyFont: DMSANS, radius: 12, spacing: 20, button: "solid", caps: false,
+    colors: { bg: "#FFF6EC", text: "#2A160B", muted: "#6B4E3A", accent: "#B4410C", onAccent: "#FFFFFF", line: "#EBD6C2" } },
+
+  { id: "emerald", name: "Emerald", dark: true, headingFont: FRAUNCES, bodyFont: DMSANS, radius: 4, spacing: 20, button: "outline", caps: false,
+    colors: { bg: "#0E1A15", text: "#E8F0EA", muted: "#9FB3A8", accent: "#D4A24C", onAccent: "#0E1A15", line: "#24382F" } },
+
+  { id: "ivory", name: "Ivory", headingFont: FRAUNCES, bodyFont: FRAUNCES, radius: 0, spacing: 20, button: "underline", caps: true,
+    colors: { bg: "#FBF8F1", text: "#1F1B16", muted: "#5F574C", accent: "#7A5C14", onAccent: "#FFFFFF", line: "#1F1B16" } },
+
+  { id: "cobalt", name: "Cobalt", headingFont: DMSANS, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
+    colors: { bg: "#F4F6FB", text: "#0F1A3A", muted: "#4A5675", accent: "#1F4FD1", onAccent: "#FFFFFF", line: "#CBD3E6" } },
+
+  { id: "espresso", name: "Espresso", dark: true, headingFont: FRAUNCES, bodyFont: DMSANS, radius: 12, spacing: 16, button: "solid", caps: false,
+    colors: { bg: "#1B1410", text: "#F3E8DC", muted: "#BBA897", accent: "#E8864A", onAccent: "#1B1410", line: "#3A2C23" } },
+
+  { id: "sage", name: "Sage", headingFont: FRAUNCES, bodyFont: DMSANS, radius: 4, spacing: 20, button: "outline", caps: false,
+    colors: { bg: "#EEF1EA", text: "#23301F", muted: "#55624F", accent: "#4C6B2F", onAccent: "#FFFFFF", line: "#C8D1BF" } },
+
+  { id: "rose", name: "Rose", headingFont: FRAUNCES, bodyFont: FRAUNCES, radius: 12, spacing: 16, button: "solid", caps: false,
+    colors: { bg: "#FBF1EE", text: "#2E1A17", muted: "#6E5450", accent: "#A8323F", onAccent: "#FFFFFF", line: "#E8D2CC" } },
+
+  { id: "swiss", name: "Swiss", headingFont: DMSANS, bodyFont: DMSANS, radius: 0, spacing: 12, button: "solid", caps: true,
+    colors: { bg: "#FFFFFF", text: "#000000", muted: "#555555", accent: "#D0101F", onAccent: "#FFFFFF", line: "#000000" } }
 ];
 
 function optionExtra(field, option) {

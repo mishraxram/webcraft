@@ -17,7 +17,7 @@ answers (form)  ->  state object  ->  layout(state, theme)  ->  HTML string  -> 
 - Every step is one object in `js/steps.js`. One engine in `js/app.js` draws all of them.
 - A theme is an object of colours, fonts, radius and spacing (`js/themes.js`, 10 themes).
 - A layout is a function that returns HTML (`js/layouts.js`, 5 layouts).
-- `js/templates.js` loops over layouts x themes, so the gallery has 50 templates and none were written by hand. Adding one theme adds 5 templates.
+- `js/templates.js` loops over layouts x themes, so the gallery has 126 templates (7 layouts x 18 themes) and none were written by hand. Adding one theme adds 7 templates.
 
 ## The 12 steps
 

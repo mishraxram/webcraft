@@ -173,3 +173,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Motion
 - css/motion.css holds all builder motion: steps slide in from the side you are going, choice cards and template plates arrive in order, the picked square stamps, wrong fields shake, and an accent line "prints" across the proof bar when the preview changes. Generated sites now stagger their cards and unveil photos as you scroll.
 - Why: movement shows the user what just changed. Every move is under a second and turns off when the computer asks for reduced motion.
+
+## Premium templates
+- Two new layouts in js/layouts2.js: Showcase (huge headline, sticky section titles, numbered index rows) and Bento (sections as tiles on a 12-column grid, about 5 / cards 7). Eight new themes: Saffron, Emerald, Ivory, Cobalt, Espresso, Sage, Rose, Swiss. The gallery grows from 50 to 126 templates with no template written by hand.
+- Why: more looks to pick from; each new theme's colors were checked for 4.5:1 contrast first. Templates are original, not copied from the internet (CLAUDE.md rule).
