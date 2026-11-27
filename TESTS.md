@@ -121,3 +121,8 @@
 | 117 | Quick Demo step 6, hero photo 960x600, click 1:1 | Square crop from the middle | 600x600 | Pass |
 | 118 | Rotate then 16:9, then Rotate, then Flip | Sizes follow, image stays valid base64 | 600x338, 338x600, 338x600; safeImage ok; 47 KB; Undo enabled | Pass |
 | 119 | SVG logo uploaded | No crop tools (SVG has no pixels) | Tool row hidden | Pass |
+| 120 | UPI ID `a"><script>alert(1)</script>@x` | Error under field, no UPI box on site | "Enter a UPI ID like yourname@okaxis."; no `.upi` in output | Pass |
+| 121 | UPI ID saffron.hearth@okaxis, phone width | Pay box with QR, ID and Open UPI app button | upi://pay?pa=saffron.hearth%40okaxis&pn=The%20Saffron%20Hearth&cu=INR, QR shown | Pass |
+| 122 | Download ZIP (restaurant demo + UPI) | privacy.html and terms.html, footer links in index.html | Privacy: collect, contact, orders, payments; Terms: use, changes, links | Pass |
+| 123 | Download HTML (single file) | No Privacy/Terms links (pages would not exist) | No privacy.html link | Pass |
+| 124 | Site name `<img src=x onerror=alert(1)>` on legal pages | Shown as text | No raw `<img src=x` in privacy.html | Pass |

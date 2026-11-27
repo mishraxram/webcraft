@@ -29,7 +29,7 @@ function downloadHTML() {
 }
 
 function downloadZIP() {
-  const html = buildSite(state);
+  const html = buildSite(Object.assign({}, state, { legal: true }));
   const match = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
   const css = match ? match[1].trim() : "";
   const page = match
@@ -46,6 +46,8 @@ function downloadZIP() {
   zip.file("robots.txt", robotsTXT(state));
   zip.file("404.html", notFoundHTML(state, theme));
   if (sitemapXML(state)) zip.file("sitemap.xml", sitemapXML(state));
+  zip.file("privacy.html", privacyHTML(state, theme));
+  zip.file("terms.html", termsHTML(state, theme));
   return zip.generateAsync({ type: "blob" }).then(blob => saveFile(blob, siteFileName() + ".zip"));
 }
 
@@ -257,7 +259,7 @@ function renderExport() {
   wrap.append(
     el("h2", "", "Download or publish"),
     credit,
-    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css, favicon, robots.txt, a 404 page (and sitemap.xml if you gave a site address) plus steps to put it online. Publish: saves it to the local server at localhost:3000 and adds a message form to the site."),
+    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css, favicon, robots.txt, a 404 page, Privacy and Terms pages (and sitemap.xml if you gave a site address) plus steps to put it online. Publish: saves it to the local server at localhost:3000 and adds a message form to the site."),
     htmlButton, zipButton, publishButton, error, result,
     renderInbox(),
     el("h2", "host-title", "Put it online"),

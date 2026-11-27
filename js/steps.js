@@ -43,7 +43,8 @@ const STEPS = [
       { type: "text", field: "contact.email", label: "Email", check: "email", maxLength: 80 },
       { type: "text", field: "contact.phone", label: "Phone", check: "phone", maxLength: 20 },
       { type: "text", field: "contact.whatsapp", label: "WhatsApp number", check: "phone", maxLength: 20 },
-      { type: "text", field: "contact.address", label: "Address", maxLength: 150 }
+      { type: "text", field: "contact.address", label: "Address", maxLength: 150 },
+      { type: "text", field: "contact.upi", label: "UPI ID for payments (optional)", check: "upi", maxLength: 60 }
     ] },
 
   { id: "footer", title: "Footer and social links", help: "Small text at the bottom and your profile links.",

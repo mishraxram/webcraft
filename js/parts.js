@@ -72,9 +72,10 @@ function contactHTML(state) {
   if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
   if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}" target="_blank" rel="noopener">WhatsApp</a></li>`);
   if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
-  if (!rows.length && !state.inbox) return "";
+  if (!rows.length && !state.inbox && !upiId(state)) return "";
   const list = rows.length ? `<ul class="contact">${rows.join("")}</ul>` : "";
-  return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p>${list}${state.inbox ? FORM_HTML : ""}</section>`;
+  // UPI QR and pay button come right after the contact list
+  return `<section id="contact"><h2>Contact</h2><p class="cta">${CTAS[state.siteType] || "Get in touch."}</p>${list}${upiHTML(state)}${state.inbox ? FORM_HTML : ""}</section>`;
 }
 
 function initialsOf(state) {
@@ -91,8 +92,10 @@ function footerHTML(state) {
   const links = Object.keys(state.social).filter(key => safeUrl(state.social[key]))
     .map(key => `<a href="${safeUrl(state.social[key])}">${key}</a>`).join("");
   const madeWith = state.madeWith ? `<p>Made with ${escapeHTML(APP_NAME)}</p>` : "";
+  // Privacy and Terms pages exist only in the ZIP, so the links are added only there
+  const legal = state.legal ? `<nav class="social"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>` : "";
   const wordmark = `<p class="wordmark" aria-hidden="true">${escapeHTML(state.siteName)}</p>`;
-  return `<footer>${wordmark}${state.footer.trim() ? `<p>${escapeHTML(state.footer)}</p>` : ""}${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}<a class="to-top" href="#home">Back to top</a></footer>`;
+  return `<footer>${wordmark}${state.footer.trim() ? `<p>${escapeHTML(state.footer)}</p>` : ""}${madeWith}${links ? `<nav class="social">${links}</nav>` : ""}${legal}<a class="to-top" href="#home">Back to top</a></footer>`;
 }
 
 const FONT_FILES = {
@@ -154,6 +157,7 @@ html.other-mode { ${colorVars(other)} }
 ${SITE_CSS}
 ${css}
 ${hasOrdering(state) ? ORDER_CSS : ""}
+${upiId(state) ? UPI_CSS : ""}
 </style></head>
 <body>${body.replace("</footer>", `<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button></footer>`)}${cartHTML(state)}${whatsappHTML(state)}
 ${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${WA_SCRIPT}${hasOrdering(state) ? ORDER_SCRIPT : ""}${state.inbox ? FORM_SCRIPT : ""}</body></html>`;

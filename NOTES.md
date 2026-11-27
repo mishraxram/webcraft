@@ -157,3 +157,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Image studio
 - Every uploaded photo gets Crop 1:1 / 4:3 / 16:9 (center crop), Rotate and Flip buttons, done on a canvas in the browser; results stay under 500 KB and go through undo (js/imagetools.js). Upload already shrinks photos up to 5 MB to WebP.
 - Why: users upload phone photos in the wrong shape; fixing them inside the builder means no other app is needed.
+
+## Legal pages + UPI pay
+- Step 9 takes an optional UPI ID (checked as name@bank). The site then shows a "Pay with UPI" box with a QR code and an "Open UPI app" button (upi://pay link). The ZIP adds privacy.html and terms.html written from the answers (orders, payments, contact), with footer links to them (js/legal.js).
+- Why: Indian small businesses get paid by UPI, and a site that takes messages or orders should say what it does with that data. Both are offline templates, no payment server.
