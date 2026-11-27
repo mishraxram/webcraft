@@ -132,3 +132,6 @@
 | 128 | 12:00-23:30 closed Monday; clock Sun 13:00 / Mon 13:00 / Sun 23:45 | Open now / Closed now / Closed now | Open now / Closed now / Closed now | Pass |
 | 129 | Late-night 18:00-02:00; clock 01:00 after a closed day / after an open day | Closed now / Open now | Closed now / Open now | Pass |
 | 130 | Hours 9:00-22:00 closed sun, check JSON-LD | openingHours without Sunday | "Mo,Tu,We,Th,Fr,Sa 09:00-22:00" | Pass |
+| 131 | Step 2 | 14 site types, lettered A to N | Portfolio ... Photography, Wedding (A-N) | Pass |
+| 132 | Site type Gym, then Suggest text (Bold) on Headline | Gym menu and gym lines | Menu Home/Plans/About/Contact; "Fit Zone. No excuses." | Pass |
+| 133 | Build site for each of the 8 new types | Site builds, right Google type | All 8 build; gym has "@type":"ExerciseGym" and kicker "Train with us" | Pass |

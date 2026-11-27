@@ -165,3 +165,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Opening hours
 - Step 9 takes optional opening and closing times (24-hour) and a closed day. The site shows "Open 12:00 to 23:30 (closed Monday)" with an "Open now / Closed now" badge from the visitor's own clock, late-night hours included, and Google gets openingHours in JSON-LD (js/hours.js).
 - Why: the first thing a visitor asks a shop or restaurant is "are you open now?"; this answers it with no server.
+
+## More site types
+- Step 2 now has 14 types: the first 6 plus shop, clinic, gym, salon, coaching, nonprofit, photography and wedding. Each one is a single data object in js/categories.js (menu, sample text, card ideas, heading, Google type); a loop copies them into the existing tables.
+- Why: more people can start from text that fits them, and adding a type needs no new code, the same idea as templates = layouts x themes.
