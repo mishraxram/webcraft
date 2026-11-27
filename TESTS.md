@@ -89,7 +89,7 @@
 | 85 | Review step, "Put it online" | Netlify Drop and GitHub Pages steps with links that open in a new tab | 2 steps, links target _blank rel noopener, ink color | Pass |
 | 86 | Publish "Asha Rao" with the server running | Link to localhost:3000/asha-rao/, plus a QR code and the WiFi link | QR (37x37 SVG with 3 finder squares) and http://<wifi-ip>:3000/asha-rao/ shown under the link | Pass |
 | 87 | Publish with no WiFi connected | Only the localhost link, no QR box | phoneUrl "" so no QR shown | Pass |
-| 88 | POST /publish from another device on the WiFi | 403 "Only the computer running the server can do this." | Checked in code (onlyThisComputer); test with a phone at viva | |
+| 88 | POST /publish from another device on the WiFi | 403 "Only the computer running the server can do this." | Sent to the WiFi address (10.61.100.239:3000), not localhost: POST /publish and GET /messages both 403 with that text, no folder made; the site itself still opens (200) | Pass |
 | 89 | Publish `../bad` after the WiFi change | Still rejected | 400 "Site name can only use a-z, 0-9 and -" | Pass |
 | 90 | Published site: press Send with empty fields | Browser blocks it, nothing sent | Required fields stop submit, no request | Pass |
 | 91 | Published site: send a message | "Thanks. Your message was sent.", form clears, saved in messages/form-test.json | As expected | Pass |

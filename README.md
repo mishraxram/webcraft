@@ -4,7 +4,7 @@ A website builder that runs in the browser. You answer 12 short steps and it giv
 
 Mini project, B.Tech. Plain HTML, CSS and JavaScript. No framework, no AI, no API calls. It works with the internet switched off.
 
-**Live:** https://mishraxram.github.io/mini-project/
+**Live:** https://mishraxram.github.io/webcraft/
 
 ![WebCraft builder: the form on the left, live preview on the right](docs/builder.png)
 
@@ -15,14 +15,14 @@ answers (form)  ->  state object  ->  layout(state, theme)  ->  HTML string  -> 
 ```
 
 - Every step is one object in `js/steps.js`. One engine in `js/app.js` draws all of them.
-- A theme is an object of colours, fonts, radius and spacing (`js/themes.js`, 10 themes).
-- A layout is a function that returns HTML (`js/layouts.js`, 5 layouts).
+- A theme is an object of colours, fonts, radius and spacing (`js/themes.js`, 18 themes).
+- A layout is a function that returns HTML (`js/layouts.js` and `js/layouts2.js`, 7 layouts).
 - `js/templates.js` loops over layouts x themes, so the gallery has 126 templates (7 layouts x 18 themes) and none were written by hand. Adding one theme adds 7 templates.
 
 ## The 12 steps
 
 1. Site name and logo
-2. Site type (portfolio, business, blog, event, restaurant, student)
+2. Site type (14 types: portfolio, business, blog, event, restaurant, student, shop, clinic, gym, salon, coaching, nonprofit, photography, wedding)
 3. Template, from a gallery with filters, search and a random pick
 4. Colours and font style
 5. Menu items (up to 6)
@@ -66,7 +66,7 @@ The GitHub Pages link above has no server, so Publish does not work there. Downl
 - The publish name only allows `a-z`, `0-9` and `-`, so `../` and slashes cannot reach the file system.
 - Opened project files are checked field by field; unknown or wrong-type fields are skipped.
 
-The full test table is in [TESTS.md](TESTS.md). Notes on why each part was built the way it was are in [NOTES.md](NOTES.md).
+The project report (flow chart, screenshots, limitations, future scope) is in [docs/REPORT.md](docs/REPORT.md). The full test table is in [TESTS.md](TESTS.md). Notes on why each part was built the way it was are in [NOTES.md](NOTES.md).
 
 ## Limits
 

@@ -189,3 +189,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Cover screen
 - js/cover.js shows a magazine-style cover on first visit: the headline rises line by line, three real templates (built live from the demo project) drift like proofs on a desk, and a ticker shows the real counts (templates, steps, site types). Start building, Watch the demo, Esc, or click the WebCraft name to open it again.
 - Why: the builder opened straight into a form, which looked plain; the cover shows what the tool makes before asking anything. It uses common product-page ideas (live product shots, staged reveal, ticker), drawn in our own editorial style, not copied from any site.
+
+## Project report
+- docs/REPORT.md is the college report: abstract, flow chart, data flow, module list, six screenshots (cover, gallery, a step, review, generated site on desktop and phone), security, test summary, limitations, future scope.
+- Why: the Definition of Done asks for a report; screenshots were taken from the real builder with the demo project, and the WiFi publish test (row 88) was run for real instead of left for the viva.
