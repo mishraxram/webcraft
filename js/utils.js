@@ -86,6 +86,8 @@ function validate(step, value) {
   if (!text) return step.required ? "This field is required." : "";
   if (step.maxLength && text.length > step.maxLength) return "Keep it under " + step.maxLength + " characters.";
   if (step.check === "upi" && !UPI_PATTERN.test(text)) return "Enter a UPI ID like yourname@okaxis.";
+  if (step.check === "time" && !TIME_PATTERN.test(text)) return "Enter a 24-hour time, like 09:00 or 21:30.";
+  if (step.check === "day" && dayIndex(text) < 0) return "Enter a day, like Sunday.";
   if (step.check === "url" && !/^https?:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/[a-z0-9._~\/-]*)?$/i.test(text)) return "Enter a full address, like https://mysite.netlify.app";
   if (step.check === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "Enter a valid email, like name@example.com.";
   if (step.check === "phone") {

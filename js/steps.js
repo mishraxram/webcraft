@@ -44,7 +44,10 @@ const STEPS = [
       { type: "text", field: "contact.phone", label: "Phone", check: "phone", maxLength: 20 },
       { type: "text", field: "contact.whatsapp", label: "WhatsApp number", check: "phone", maxLength: 20 },
       { type: "text", field: "contact.address", label: "Address", maxLength: 150 },
-      { type: "text", field: "contact.upi", label: "UPI ID for payments (optional)", check: "upi", maxLength: 60 }
+      { type: "text", field: "contact.upi", label: "UPI ID for payments (optional)", check: "upi", maxLength: 60 },
+      { type: "text", field: "contact.opens", label: "Opens at, 24-hour (optional)", check: "time", maxLength: 5 },
+      { type: "text", field: "contact.closes", label: "Closes at, 24-hour", check: "time", maxLength: 5 },
+      { type: "text", field: "contact.closedDay", label: "Closed on (optional)", check: "day", maxLength: 9 }
     ] },
 
   { id: "footer", title: "Footer and social links", help: "Small text at the bottom and your profile links.",
@@ -81,6 +84,7 @@ const SITE_DEFAULTS = {
     "cards.title": "Session name and time", "cards.detail": "One line: who speaks and what about" },
   restaurant: { menu: ["Home", "Menu", "About", "Contact"], heroTitle: "South Indian food, made fresh",
     heroText: "Open daily 11am to 11pm.", about: "Your story, your kitchen, what to try first.",
+    "contact.opens": "11:00", "contact.closes": "23:00", "contact.closedDay": "Monday",
     "cards.title": "Dish name and price", "cards.detail": "One line: what is in it" },
   student: { menu: ["Home", "Projects", "About", "Contact"], heroTitle: "B.Tech CSE student, building for the web",
     heroText: "Looking for an internship in web development.", about: "Your college, your skills, what you are learning now.",

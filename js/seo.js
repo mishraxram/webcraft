@@ -28,6 +28,7 @@ function jsonLd(state) {
   if (state.contact.email) data.email = state.contact.email;
   if (state.contact.phone) data.telephone = state.contact.phone;
   if (state.contact.address && data["@type"] !== "Person") data.address = state.contact.address;
+  if (ldHours(state) && data["@type"] !== "Person") data.openingHours = ldHours(state);
   const links = Object.values(state.social).filter(link => /^https:\/\//i.test(link));
   if (links.length) data.sameAs = links;
   // "<" is written as < so no text can close the script tag early

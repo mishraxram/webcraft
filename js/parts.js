@@ -72,6 +72,7 @@ function contactHTML(state) {
   if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
   if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}" target="_blank" rel="noopener">WhatsApp</a></li>`);
   if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
+  if (hoursOf(state)) rows.push(hoursHTML(state));
   if (!rows.length && !state.inbox && !upiId(state)) return "";
   const list = rows.length ? `<ul class="contact">${rows.join("")}</ul>` : "";
   // UPI QR and pay button come right after the contact list
@@ -158,8 +159,9 @@ ${SITE_CSS}
 ${css}
 ${hasOrdering(state) ? ORDER_CSS : ""}
 ${upiId(state) ? UPI_CSS : ""}
+${hoursOf(state) ? HOURS_CSS : ""}
 </style></head>
 <body>${body.replace("</footer>", `<button class="mode-btn" type="button" aria-pressed="false">${theme.dark ? "Light mode" : "Dark mode"}</button></footer>`)}${cartHTML(state)}${whatsappHTML(state)}
-${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${WA_SCRIPT}${hasOrdering(state) ? ORDER_SCRIPT : ""}${state.inbox ? FORM_SCRIPT : ""}</body></html>`;
+${MENU_SCRIPT}${MODE_SCRIPT}${REVEAL_SCRIPT}${WA_SCRIPT}${hasOrdering(state) ? ORDER_SCRIPT : ""}${state.inbox ? FORM_SCRIPT : ""}${hoursOf(state) ? HOURS_SCRIPT : ""}</body></html>`;
 }
 

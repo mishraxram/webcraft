@@ -3,7 +3,7 @@ const state = {
   menuItems: ["Home", "About", "Contact"],
   heroTitle: "", heroText: "", about: "",
   cards: [],
-  contact: { email: "", phone: "", whatsapp: "", address: "", upi: "" },
+  contact: { email: "", phone: "", whatsapp: "", address: "", upi: "", opens: "", closes: "", closedDay: "" },
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
   seo: { title: "", description: "", url: "" },

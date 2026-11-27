@@ -161,3 +161,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Legal pages + UPI pay
 - Step 9 takes an optional UPI ID (checked as name@bank). The site then shows a "Pay with UPI" box with a QR code and an "Open UPI app" button (upi://pay link). The ZIP adds privacy.html and terms.html written from the answers (orders, payments, contact), with footer links to them (js/legal.js).
 - Why: Indian small businesses get paid by UPI, and a site that takes messages or orders should say what it does with that data. Both are offline templates, no payment server.
+
+## Opening hours
+- Step 9 takes optional opening and closing times (24-hour) and a closed day. The site shows "Open 12:00 to 23:30 (closed Monday)" with an "Open now / Closed now" badge from the visitor's own clock, late-night hours included, and Google gets openingHours in JSON-LD (js/hours.js).
+- Why: the first thing a visitor asks a shop or restaurant is "are you open now?"; this answers it with no server.

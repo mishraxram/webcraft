@@ -126,3 +126,9 @@
 | 122 | Download ZIP (restaurant demo + UPI) | privacy.html and terms.html, footer links in index.html | Privacy: collect, contact, orders, payments; Terms: use, changes, links | Pass |
 | 123 | Download HTML (single file) | No Privacy/Terms links (pages would not exist) | No privacy.html link | Pass |
 | 124 | Site name `<img src=x onerror=alert(1)>` on legal pages | Shown as text | No raw `<img src=x` in privacy.html | Pass |
+| 125 | Opens at `9am`, `24:00`, `21:61` | Error under field | "Enter a 24-hour time, like 09:00 or 21:30." for all three | Pass |
+| 126 | Closed on `xx` or `<script>` | Error under field | "Enter a day, like Sunday." | Pass |
+| 127 | Opens `"><script>alert(1)</script>`, closes 22:00 | No hours row, nothing injected | hoursHTML() empty | Pass |
+| 128 | 12:00-23:30 closed Monday; clock Sun 13:00 / Mon 13:00 / Sun 23:45 | Open now / Closed now / Closed now | Open now / Closed now / Closed now | Pass |
+| 129 | Late-night 18:00-02:00; clock 01:00 after a closed day / after an open day | Closed now / Open now | Closed now / Open now | Pass |
+| 130 | Hours 9:00-22:00 closed sun, check JSON-LD | openingHours without Sunday | "Mo,Tu,We,Th,Fr,Sa 09:00-22:00" | Pass |

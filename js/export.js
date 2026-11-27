@@ -115,7 +115,10 @@ const DEMO_PROJECT = {
     email: "",
     phone: "+91 85283 03820",
     whatsapp: "+91 85283 03820",
-    address: "Lane 7, Koregaon Park, Pune, Maharashtra 411001"
+    address: "Lane 7, Koregaon Park, Pune, Maharashtra 411001",
+    opens: "12:00",
+    closes: "23:30",
+    closedDay: "Monday"
   },
   footer: "The Saffron Hearth • Artisanal Indian Kitchen & Bar • Open Tue–Sun 12:00 PM – 11:30 PM",
   social: {
