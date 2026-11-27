@@ -69,8 +69,8 @@ input[type="file"]:hover::file-selector-button { background: var(--accent-text);
 .review li { counter-increment: row; display: flex; gap: 12px; padding: 2px 0; }
 .review li::before { content: counter(row, decimal-leading-zero); flex: none; padding-top: 3px; font-family: var(--mono); font-size: 0.6875rem; color: var(--accent-text); }
 .review li span { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
-.checks { margin-top: 32px; padding: 16px 24px; border: 1px solid var(--ink); border-left: 6px solid var(--ink); background: var(--field); }
-.checks:has(ul) { border-left-color: var(--accent); }
+.checks { margin-top: 32px; padding: 16px 24px; border: 1px solid var(--ink); background: var(--field); }
+.checks:has(ul) { border-color: var(--accent); outline: 1px solid var(--accent); outline-offset: -4px; }
 .checks h2 { margin: 0 0 8px; }
 .checks ul { margin: 8px 0 0; padding-left: 20px; }
 .checks-ok { margin: 0; font-family: var(--mono); font-size: 0.8125rem; }
