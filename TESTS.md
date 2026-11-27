@@ -115,3 +115,6 @@
 | 111 | Site address `javascript:alert(1)` | Error under field, address ignored | "Enter a full address, like https://mysite.netlify.app"; siteUrl() empty | Pass |
 | 112 | Site address https://saffron.netlify.app/ then Download ZIP | ZIP has sitemap.xml, robots.txt with Sitemap line, canonical link | sitemap loc https://saffron.netlify.app/, canonical tag present | Pass |
 | 113 | Download ZIP with no site address | favicon.svg, robots.txt, 404.html, no sitemap | Files: index.html, style.css, README.txt, favicon.svg, robots.txt, 404.html | Pass |
+| 114 | Student site, tone Bold, click Suggest text 3 times on Headline | Cycles 2 lines then repeats, counter and undo update | "Ravi... Ready to build." / "Projects first. Résumé second." / first again; 34 / 80; Undo enabled | Pass |
+| 115 | Site name `Ravi <b>Kumar</b>`, suggest About | Name shows as text, no bold tag in site | Output has no `<b>Kumar</b>` tag | Pass |
+| 116 | Step 8, one empty card, Fill card ideas twice | Empty card replaced by 3 ideas, no duplicates on 2nd click | 3 cards both times | Pass |

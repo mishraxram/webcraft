@@ -144,3 +144,13 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Colophon footer */
 body > footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 64px; padding-top: 16px;
   border-top: 1px solid var(--ink); font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--muted); }
+
+/* Copy helper: tone chips and a suggest button under a text box */
+.copy-helper { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 8px; }
+.copy-label { margin-right: 8px; font-family: var(--mono); font-size: 0.6875rem; color: var(--muted); }
+.copy-helper .chip { padding: 4px 10px; font-family: var(--mono); font-size: 0.6875rem; text-transform: capitalize; }
+.copy-go { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 12px; border-color: var(--accent-text);
+  color: var(--accent-text); font-family: var(--mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.copy-go::before { content: "+"; font-size: 0.875rem; }
+.copy-go:hover:not(:disabled) { background: var(--accent-text); border-color: var(--accent-text); color: var(--white); }
+.list > .copy-go { margin-left: 8px; }

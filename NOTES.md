@@ -149,3 +149,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Site health score + SEO pack
 - Review step shows a 0-100 health score from five rule-based parts (SEO, Accessibility, Content, Speed, Links) with a fix list (js/health.js). Every site gets a favicon and JSON-LD; the ZIP adds favicon.svg, robots.txt, 404.html and sitemap.xml (js/seo.js).
 - Why: the student sees exactly what to fix before publishing, and the site is ready for Google without any AI or server.
+
+## Copy helper (no AI)
+- Steps 6 and 7 get tone chips (Formal, Friendly, Bold) and "Suggest text", which fills the box with the next pre-written line for the site type, with the site name put in. Step 8 gets "Fill card ideas" (js/copybank.js).
+- Why: a blank box is the hardest part for most users; fixed lines keep it offline, free and predictable, and everything still goes through escapeHTML.

@@ -101,6 +101,7 @@ function renderInput(input) {
     box.placeholder = typeHint(input.field);
     box.oninput = () => setValue(input.field, box.value);
     wrap.append(box, charCounter(box));
+    if (hasCopy(input.field)) wrap.append(copyHelper(input.field, box));
   }
 
   if (errors[input.field]) {
@@ -138,6 +139,7 @@ function renderList(input, id) {
   add.disabled = items.length >= input.maxItems;
   add.onclick = () => { items.push(input.itemFields ? { title: "", detail: "", image: "" } : ""); render(); };
   list.append(add);
+  if (input.field === "cards") list.append(cardIdeasButton());
   return list;
 }
 
