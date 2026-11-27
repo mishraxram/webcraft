@@ -160,3 +160,6 @@ input[type="file"]:hover::file-selector-button { background: var(--accent-text);
   .swatch { width: 7px; }
   .field > .option { gap: 8px; padding: 24px 12px 12px; overflow-wrap: normal; }
 }
+.image-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; flex-basis: 100%; }
+.image-tools:empty { display: none; }
+.image-tools .chip { padding: 4px 10px; font-family: var(--mono); font-size: 0.6875rem; }

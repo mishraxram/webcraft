@@ -68,7 +68,7 @@ function imagePicker(id, label, getImage, setImage, maxSide) {
     const remove = el("button", "", "Remove image");
     remove.type = "button";
     remove.onclick = () => { setImage(""); render(); };
-    wrap.append(preview, remove);
+    wrap.append(preview, remove, imageTools(getImage, setImage, text => { error.textContent = text; error.hidden = false; }));
   }
   wrap.append(error);
   return wrap;

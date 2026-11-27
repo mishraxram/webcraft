@@ -118,3 +118,6 @@
 | 114 | Student site, tone Bold, click Suggest text 3 times on Headline | Cycles 2 lines then repeats, counter and undo update | "Ravi... Ready to build." / "Projects first. Résumé second." / first again; 34 / 80; Undo enabled | Pass |
 | 115 | Site name `Ravi <b>Kumar</b>`, suggest About | Name shows as text, no bold tag in site | Output has no `<b>Kumar</b>` tag | Pass |
 | 116 | Step 8, one empty card, Fill card ideas twice | Empty card replaced by 3 ideas, no duplicates on 2nd click | 3 cards both times | Pass |
+| 117 | Quick Demo step 6, hero photo 960x600, click 1:1 | Square crop from the middle | 600x600 | Pass |
+| 118 | Rotate then 16:9, then Rotate, then Flip | Sizes follow, image stays valid base64 | 600x338, 338x600, 338x600; safeImage ok; 47 KB; Undo enabled | Pass |
+| 119 | SVG logo uploaded | No crop tools (SVG has no pixels) | Tool row hidden | Pass |

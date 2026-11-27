@@ -153,3 +153,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Copy helper (no AI)
 - Steps 6 and 7 get tone chips (Formal, Friendly, Bold) and "Suggest text", which fills the box with the next pre-written line for the site type, with the site name put in. Step 8 gets "Fill card ideas" (js/copybank.js).
 - Why: a blank box is the hardest part for most users; fixed lines keep it offline, free and predictable, and everything still goes through escapeHTML.
+
+## Image studio
+- Every uploaded photo gets Crop 1:1 / 4:3 / 16:9 (center crop), Rotate and Flip buttons, done on a canvas in the browser; results stay under 500 KB and go through undo (js/imagetools.js). Upload already shrinks photos up to 5 MB to WebP.
+- Why: users upload phone photos in the wrong shape; fixing them inside the builder means no other app is needed.
