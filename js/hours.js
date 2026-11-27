@@ -33,7 +33,7 @@ function hoursHTML(state) {
   const h = hoursOf(state);
   if (!h) return "";
   const closedText = h.closed >= 0 ? ` (closed ${DAYS[h.closed]})` : " every day";
-  return `<li class="hours" data-open="${h.opens}" data-close="${h.closes}" data-closed="${h.closed}">` +
+  return `<li class="hours" data-label="Hours" data-open="${h.opens}" data-close="${h.closes}" data-closed="${h.closed}">` +
     `Open ${h.opens} to ${h.closes}${closedText}<span class="hours-now" hidden></span></li>`;
 }
 

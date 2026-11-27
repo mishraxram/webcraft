@@ -181,3 +181,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Fonts, cinematic demo, cleanup
 - Two more local fonts (Playfair Display, Space Grotesk, both OFL) give two new font styles in step 4 and new looks for five themes. Quick Demo now opens with a short title sequence (site name, steps counting 01 to 12, wipe away) and shows the Showcase / Emerald template; demo data moved to js/demo.js. Every site's headline now rises out of a mask and the hero photo wipes in.
 - Why: the demo is the first thing examiners see, so it should look finished. Removed the unused test-layout.html and setup-project.js so the folder holds only files the project uses.
+
+## Finishing details on every template
+- All layouts now share DETAIL_CSS (js/parts.js): numbered section titles (01, 02...), prices like "(₹420)" moved onto the card title with a dotted leader like a printed menu, and a labelled contact grid. Showcase rows became menu lines with a square photo; Sidebar and Split keep the order button under the text.
+- Why: the templates looked plain because every card and contact line was the same paragraph; small print-style details make all 126 look designed, and nothing new is typed by the user.

@@ -148,3 +148,8 @@
 | 144 | Step 4 font styles | 5 styles: serif, sans, mono, display, grotesk; new fonts load from /fonts | 5 options; Playfair Display and Space Grotesk "loaded" | Pass |
 | 145 | Accessibility check on all 126 templates with Display and with Grotesk font style | No contrast warning | 0 of 252 | Pass |
 | 146 | Downloaded site with Display style | Playfair embedded as base64, headline mask and photo wipe animations in the file | @font-face with data: URL, @keyframes title-in and wipe | Pass |
+| 147 | Card detail "Black lentils... (₹420)" | Price on the title line with a dotted leader, removed from the description; cart still gets 420 | class="price">₹420, data-price="420" | Pass |
+| 148 | Card title `<img src=x onerror=alert(1)>`, detail `<b>x</b> (₹99)` | Text only, price tag ₹99 | No raw tags in output | Pass |
+| 149 | Contact with phone, WhatsApp, address, hours | Labelled grid: Phone / WhatsApp / Address / Hours | 4 data-label rows, WhatsApp shows the number | Pass |
+| 150 | Accessibility check on all 126 templates after the detail changes | No contrast warning | 0 of 126 | Pass |
+| 151 | Sidebar layout, card with photo and Add to order | Button under the text, not squeezed in the photo column | Button left = title left (448 px) | Pass |

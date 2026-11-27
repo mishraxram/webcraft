@@ -17,21 +17,22 @@ main { max-width: 84rem; margin: 0 auto; padding: 0 calc(var(--s) * 2); }
 .hero h1 + p { grid-column: 1; font-size: 1.25rem; color: var(--muted); }
 .hero .btn { grid-column: 2; justify-self: end; }
 .hero .hero-img { aspect-ratio: 21 / 9; margin-top: calc(var(--s) * 3); }
-section:not(.hero) { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 0 calc(var(--s) * 2);
+section:not(.hero) { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 0 calc(var(--s) * 2);
   padding: calc(var(--s) * 4) 0; border-top: 1px solid var(--line); }
 section:not(.hero) > * { grid-column: 2; }
 section:not(.hero) > h2 { grid-column: 1; grid-row: 1 / span 6; align-self: start; position: sticky; top: 5rem;
   font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.05; }
 #about p { font-family: var(--head); font-size: clamp(1.25rem, 2.2vw, 1.75rem); line-height: 1.4; }
 .cards { list-style: none; padding: 0; counter-reset: item; }
-.cards li { counter-increment: item; display: grid; grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.4fr); gap: 0 var(--s);
+.cards li { counter-increment: item; display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 0 calc(var(--s) * 1.5);
   align-items: baseline; padding: calc(var(--s) * 1.5) 0; border-bottom: 1px solid var(--line); }
 .cards li::before { content: counter(item, decimal-leading-zero); font-size: 0.875rem; color: var(--accent); }
 .cards li:hover { transform: translateX(6px); }
-.cards h3 { grid-column: 2; font-size: clamp(1.25rem, 2.4vw, 1.75rem); }
-.cards p { grid-column: 3; color: var(--muted); }
-.cards .card-img { grid-column: 2 / -1; grid-row: 2; aspect-ratio: 21 / 9; margin: var(--s) 0 0; }
-.cards .add { grid-column: 2 / -1; justify-self: start; }
+.cards h3 { grid-column: 2; font-size: clamp(1.25rem, 2.4vw, 1.75rem); line-height: 1.2; }
+.cards p { grid-column: 2; margin-top: calc(var(--s) / 2); color: var(--muted); }
+.cards li:has(.card-img) { grid-template-columns: 4rem minmax(0, 1fr) 9rem; }
+.cards .card-img { grid-column: 3; grid-row: 1 / span 3; aspect-ratio: 1; margin: 0; align-self: start; }
+.cards .add { grid-column: 2; justify-self: start; margin-top: var(--s); }
 #contact { border-top: 4px solid var(--accent); }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
   width: min(100% - var(--s) * 4, 84rem - var(--s) * 4); margin: 0 auto; padding: calc(var(--s) * 2) 0; color: var(--muted); }
@@ -41,9 +42,9 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: va
   .hero h1 + p, .hero .btn, section:not(.hero) > *, section:not(.hero) > h2 { grid-column: 1; }
   .hero .btn { justify-self: start; margin-top: var(--s); }
   section:not(.hero) > h2 { grid-row: auto; position: static; margin-bottom: var(--s); }
-  .cards li { grid-template-columns: 3rem minmax(0, 1fr); }
+  .cards li, .cards li:has(.card-img) { grid-template-columns: 3rem minmax(0, 1fr); }
   .cards p, .cards .card-img, .cards .add { grid-column: 2; }
-  .cards .card-img { grid-row: auto; }
+  .cards .card-img { grid-row: auto; aspect-ratio: 16 / 9; margin-top: var(--s); }
 }`;
   return page(state, theme, css, `<header><strong>${logoHTML(state)}${escapeHTML(state.siteName)}</strong><nav>${navHTML(state)}</nav></header>
 <main>${heroHTML(state)}${aboutHTML(state)}${cardsHTML(state)}${contactHTML(state)}</main>${footerHTML(state)}`);

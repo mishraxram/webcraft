@@ -57,6 +57,7 @@ h2 { font-family: var(--body); font-size: 0.8125rem; text-transform: uppercase; 
 .cards h3 { font-size: 1rem; }
 .cards li:has(.card-img) { grid-template-columns: 8rem 1fr; }
 .cards .card-img { grid-row: span 2; aspect-ratio: 1; margin: 0; }
+.cards li:has(.card-img) .add { grid-column: 2; justify-self: start; }
 footer { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s);
   padding: var(--s) calc(var(--s) * 2); border-top: 1px solid var(--line);
   font-size: 0.875rem; color: var(--muted); }
@@ -121,6 +122,7 @@ h2 { display: inline-block; font-size: 1.25rem; margin-bottom: var(--s); border-
 .cards li { padding: var(--s) 0; border-top: 1px solid var(--line); }
 .cards li:has(.card-img) { display: grid; grid-template-columns: 6rem 1fr; column-gap: calc(var(--s) * 1.5); }
 .cards li .card-img { grid-row: span 2; aspect-ratio: 1; margin: 0; }
+.cards li:has(.card-img) .add { grid-column: 2; justify-self: start; }
 .cards h3 { font-size: 1.0625rem; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s);
   width: min(100% - var(--s) * 4, 72rem - var(--s) * 4); margin: 0 auto; padding: calc(var(--s) * 2) 0;

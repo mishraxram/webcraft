@@ -56,11 +56,20 @@ function aboutHTML(state) {
   return `<section id="about"><h2>About</h2>${photo}<p>${escapeHTML(state.about)}</p></section>`;
 }
 
+// "Slow-cooked dal. (₹420)" -> ["Slow-cooked dal.", "₹420"], so the price sits on the title line like a printed menu
+function splitPrice(detail) {
+  const match = detail.match(/\s*\(?₹\s*([\d,]+)\)?\s*$/);
+  return match ? [detail.slice(0, match.index), "₹" + match[1]] : [detail, ""];
+}
+
 function cardsHTML(state) {
   const cards = state.cards.filter(card => card.title.trim() || card.detail.trim() || safeImage(card.image));
   if (!cards.length) return "";
-  const items = cards.map(card =>
-    `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}</h3><p>${escapeHTML(card.detail)}</p>${addButtonHTML(state, card)}</li>`).join("");
+  const items = cards.map(card => {
+    const [detail, price] = splitPrice(card.detail);
+    const priceTag = price ? `<span class="lead" aria-hidden="true"></span><span class="price">${escapeHTML(price)}</span>` : "";
+    return `<li>${imgHTML(card.image, card.title, "card-img")}<h3>${escapeHTML(card.title)}${priceTag}</h3><p>${escapeHTML(detail)}</p>${addButtonHTML(state, card)}</li>`;
+  }).join("");
   const heading = CARD_HEADINGS[state.siteType] || "Work";
   return `<section id="${slug(heading)}" class="work"><h2>${heading}</h2><ol class="cards">${items}</ol></section>`;
 }
@@ -69,9 +78,9 @@ function contactHTML(state) {
   const c = state.contact;
   const rows = [];
   if (c.email.trim()) rows.push(`<li class="email"><a href="mailto:${escapeHTML(c.email)}">${escapeHTML(c.email)}</a></li>`);
-  if (c.phone.trim()) rows.push(`<li><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
-  if (c.whatsapp.trim()) rows.push(`<li><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}" target="_blank" rel="noopener">WhatsApp</a></li>`);
-  if (c.address.trim()) rows.push(`<li>${escapeHTML(c.address)}</li>`);
+  if (c.phone.trim()) rows.push(`<li data-label="Phone"><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${escapeHTML(c.phone)}</a></li>`);
+  if (c.whatsapp.trim()) rows.push(`<li data-label="WhatsApp"><a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g, "")}" target="_blank" rel="noopener">${escapeHTML(c.whatsapp)}</a></li>`);
+  if (c.address.trim()) rows.push(`<li data-label="Address">${escapeHTML(c.address)}</li>`);
   if (hoursOf(state)) rows.push(hoursHTML(state));
   if (!rows.length && !state.inbox && !upiId(state)) return "";
   const list = rows.length ? `<ul class="contact">${rows.join("")}</ul>` : "";
@@ -134,6 +143,20 @@ function whatsappHTML(state) {
   return number ? `<a class="wa" href="https://wa.me/${number}" target="_blank" rel="noopener">WhatsApp</a>` : "";
 }
 
+// Finishing details shared by every layout: numbered section titles, menu prices, labelled contact grid
+const DETAIL_CSS = `
+main { counter-reset: sec; }
+main > section:not(.hero) > h2::before { counter-increment: sec; content: counter(sec, decimal-leading-zero); display: block;
+  margin-bottom: 0.6em; font-family: var(--body); font-size: 0.75rem; font-weight: bold; letter-spacing: 0.16em; color: var(--accent); }
+.cards h3:has(.price) { display: flex; align-items: baseline; gap: 0.5em; }
+.cards h3 .lead { flex: 1; min-width: 1.5em; border-bottom: 1px dotted var(--muted); transform: translateY(-0.25em); }
+.cards h3 .price { font-family: var(--body); font-size: 0.8em; font-weight: bold; color: var(--accent); white-space: nowrap; }
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: var(--s) calc(var(--s) * 2); }
+.contact li { padding-top: calc(var(--s) * 0.75); border-top: 1px solid var(--line); line-height: 1.5; }
+.contact .email { grid-column: 1 / -1; padding-top: 0; border-top: 0; }
+.contact li[data-label]::before { content: attr(data-label); display: block; margin-bottom: 4px; font-family: var(--body);
+  font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }`;
+
 function colorVars(c) {
   return `--bg: ${c.bg}; --text: ${c.text}; --muted: ${c.muted}; --accent: ${c.accent}; --on-accent: ${c.onAccent}; --line: ${c.line};`;
 }
@@ -159,6 +182,7 @@ ${fontFaceCSS(theme)}
   --head: ${theme.headingFont}; --body: ${theme.bodyFont}; --r: ${theme.radius}px; --s: ${theme.spacing}px; }
 html.other-mode { ${colorVars(other)} }
 ${SITE_CSS}
+${DETAIL_CSS}
 ${css}
 ${hasOrdering(state) ? ORDER_CSS : ""}
 ${upiId(state) ? UPI_CSS : ""}
