@@ -5,22 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='0.75' y='0.75' width='26.5' height='26.5' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Cpath d='M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6' fill='none' stroke='%231A1A1A' stroke-width='1.5'/%3E%3Crect x='4' y='12' width='8.5' height='3' fill='%23D94F2B'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/panels.css?v=9">
 </head>
 <body>
   <header>
-    <p>
+    <p class="brand">
       <svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="0.75" y="0.75" width="26.5" height="26.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M0.75 8.5h26.5M16 8.5v18.75M4 18.5h8.5M4 22h6" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="12" width="8.5" height="3" fill="#D94F2B"/></svg>
       <strong id="app-name"></strong> <span id="app-tagline"></span>
     </p>
     <div class="project-tools">
-      <button type="button" id="demo-btn" class="quick-demo-btn"><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true" style="margin-right:4px;vertical-align:-1px;"><path d="M9 1L3 9h5l-1 6 7-9H9V1z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Quick Demo</button>
-      <button type="button" id="undo-btn" disabled>Undo</button>
-      <button type="button" id="redo-btn" disabled>Redo</button>
-      <button type="button" id="export-btn">Save project file</button>
-      <button type="button" id="import-btn">Open project file</button>
-      <input type="file" id="import-file" accept=".json,application/json" hidden>
-      <button type="button" id="reset-btn">Start over</button>
+      <div class="tool-group">
+        <button type="button" id="demo-btn" class="quick-demo-btn"><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 1L3 9h5l-1 6 7-9H9V1z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Quick demo</button>
+      </div>
+      <div class="tool-group">
+        <button type="button" id="undo-btn" disabled><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3L1.5 6.5 5 10M2 6.5h8a4 4 0 010 8H7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Undo</button>
+        <button type="button" id="redo-btn" disabled><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 3l3.5 3.5L11 10M14 6.5H6a4 4 0 000 8h3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Redo</button>
+      </div>
+      <div class="tool-group">
+        <button type="button" id="export-btn"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v9M4.5 7L8 10.5 11.5 7M2 12.5v2h12v-2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Save project</button>
+        <button type="button" id="import-btn"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10.5v-9M4.5 5L8 1.5 11.5 5M2 12.5v2h12v-2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Open project</button>
+        <input type="file" id="import-file" accept=".json,application/json" hidden>
+      </div>
+      <div class="tool-group">
+        <button type="button" id="reset-btn">Start over</button>
+      </div>
     </div>
     <p class="error" id="project-error" hidden></p>
   </header>
@@ -28,37 +37,43 @@
     <nav id="rail" aria-label="All steps"></nav>
     <main id="wizard"></main>
     <aside class="preview" aria-label="Live preview">
-      <div class="preview-bar"><span class="preview-label">Preview</span><div id="preview-devices"></div><button type="button" class="chip" id="viewcode-btn">&lt;/&gt; View code</button><button type="button" class="chip" id="fullscreen-btn">Full screen</button></div>
-      <p class="proof-bar"><span id="proof-file"></span><span id="proof-width"></span></p>
-      <div id="preview-stage"><iframe id="preview-frame" title="Live preview of your site" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+      <div class="preview-bar"><span class="preview-label">Live proof</span><div id="preview-devices"></div><button type="button" class="chip" id="viewcode-btn">&lt;/&gt; Code</button><button type="button" class="chip" id="fullscreen-btn">Full screen</button></div>
+      <div class="proof">
+        <p class="proof-bar"><span id="proof-file"></span><span id="proof-width"></span></p>
+        <div id="preview-stage"><iframe id="preview-frame" title="Live preview of your site" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+      </div>
     </aside>
   </div>
   <footer id="app-footer"></footer>
-  <script src="js/utils.js?v=8"></script>
+  <script src="js/utils.js?v=9"></script>
   <script>
     document.title = APP_NAME + " - " + APP_TAGLINE;
     document.getElementById("app-name").textContent = APP_NAME;
     document.getElementById("app-tagline").textContent = APP_TAGLINE;
-    document.getElementById("app-footer").textContent = APP_NAME + " / 50 templates / no server needed / works offline";
+    // Colophon: two short lines, like the last page of a printed book
+    document.getElementById("app-footer").append(
+      el("span", "", APP_NAME + " / 50 templates / works offline / no AI"),
+      el("span", "", "Set in Fraunces, DM Sans and JetBrains Mono")
+    );
   </script>
-  <script src="js/themes.js?v=8"></script>
-  <script src="js/fontdata.js?v=8"></script>
-  <script src="js/sitebase.js?v=8"></script>
-  <script src="js/parts.js?v=8"></script>
-  <script src="js/order.js?v=8"></script>
-  <script src="js/layouts.js?v=8"></script>
-  <script src="js/templates.js?v=8"></script>
-  <script src="js/steps.js?v=8"></script>
-  <script src="js/gallery.js?v=8"></script>
-  <script src="js/upload.js?v=8"></script>
-  <script src="js/preview.js?v=8"></script>
-  <script src="js/lib/jszip.min.js?v=8"></script>
-  <script src="js/lib/qrcode.js?v=8"></script>
-  <script src="js/qr.js?v=8"></script>
-  <script src="js/inbox.js?v=8"></script>
-  <script src="js/a11y.js?v=8"></script>
-  <script src="js/export.js?v=8"></script>
-  <script src="js/history.js?v=8"></script>
-  <script src="js/app.js?v=8"></script>
+  <script src="js/themes.js?v=9"></script>
+  <script src="js/fontdata.js?v=9"></script>
+  <script src="js/sitebase.js?v=9"></script>
+  <script src="js/parts.js?v=9"></script>
+  <script src="js/order.js?v=9"></script>
+  <script src="js/layouts.js?v=9"></script>
+  <script src="js/templates.js?v=9"></script>
+  <script src="js/steps.js?v=9"></script>
+  <script src="js/gallery.js?v=9"></script>
+  <script src="js/upload.js?v=9"></script>
+  <script src="js/preview.js?v=9"></script>
+  <script src="js/lib/jszip.min.js?v=9"></script>
+  <script src="js/lib/qrcode.js?v=9"></script>
+  <script src="js/qr.js?v=9"></script>
+  <script src="js/inbox.js?v=9"></script>
+  <script src="js/a11y.js?v=9"></script>
+  <script src="js/export.js?v=9"></script>
+  <script src="js/history.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
 </body>
 </html>

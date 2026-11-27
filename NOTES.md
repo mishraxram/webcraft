@@ -141,3 +141,7 @@ Quick Demo now uses real photos from Wikimedia Commons (credits in CREDITS.md), 
 ## Cart and one WhatsApp order
 Restaurant sites with a WhatsApp number get "Add to order" on every dish, a cart with quantities and the ₹ total, and one button that opens WhatsApp with the full order, name and table already typed (js/order.js).
 Why: a real restaurant gets one clear order message instead of one message per dish, and it still needs no server or database.
+
+## Premium editorial UI
+- Builder restyled as a printed magazine: masthead toolbar with icon groups, "Contents" rail with ticks and %, lettered choice cards, crop-marked live proof, numbered gallery plates, proof-sheet review, big export blocks, character counters, Enter hint. CSS split into style.css + panels.css (each under 200 lines).
+- Why: the flow already worked; this makes it look designed, not generated, while keeping Section 8 rules (paper/ink/one accent, 0 radius, no gradients or blur).

@@ -112,7 +112,25 @@ function renderRail() {
     if (i === current) item.setAttribute("aria-current", "step");
     list.append(item);
   });
-  return list;
+  // Small header above the list: "Contents" and how far along the user is
+  const head = el("p", "rail-head");
+  head.append(el("span", "", "Contents"), el("span", "", Math.round(current / (STEPS.length - 1) * 100) + "%"));
+  const box = document.createDocumentFragment();
+  box.append(head, list);
+  return box;
+}
+
+// Live "12 / 60" counter under a text box; turns orange near the limit
+function charCounter(box) {
+  const counter = el("span", "counter");
+  counter.setAttribute("aria-hidden", "true");
+  const update = () => {
+    counter.textContent = box.value.length + " / " + box.maxLength;
+    counter.classList.toggle("near", box.value.length >= box.maxLength * 0.9);
+  };
+  box.addEventListener("input", update);
+  update();
+  return counter;
 }
 
 function renderProgress() {

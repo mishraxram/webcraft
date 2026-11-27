@@ -43,12 +43,11 @@ function render() {
     nav.append(skip);
   }
   const next = el("button", "primary", "Next");
-  if (current === STEPS.length - 1) {
-    next.hidden = true;
-  } else {
-    next.onclick = goNext;
-  }
-  nav.append(next);
+  const hint = el("span", "kbd-hint", "or press ");
+  hint.append(el("kbd", "", "Enter"));
+  if (current === STEPS.length - 1) next.hidden = hint.hidden = true;
+  else next.onclick = goNext;
+  nav.append(hint, next);
   box.append(nav);
   document.getElementById("rail").replaceChildren(renderRail());
 
@@ -101,7 +100,7 @@ function renderInput(input) {
     box.maxLength = input.maxLength;
     box.placeholder = typeHint(input.field);
     box.oninput = () => setValue(input.field, box.value);
-    wrap.append(box);
+    wrap.append(box, charCounter(box));
   }
 
   if (errors[input.field]) {
@@ -149,8 +148,14 @@ function renderReview() {
       let value = getValue(input.field);
       if (input.image && value) value = "Image added";
       if (input.type === "mcq") value = displayName(value);
-      if (Array.isArray(value)) value = value.map(v => typeof v === "object" ? v.title + " - " + v.detail : v).join(", ");
-      list.append(el("dt", "", input.label), el("dd", value ? "" : "empty", value || "(empty)"));
+      const dd = el("dd", value && value.length ? "" : "empty", value && value.length ? value : "(empty)");
+      if (Array.isArray(value) && value.length) {
+        // Lists (menu, cards) show one numbered line each
+        const rows = el("ul");
+        value.forEach(v => { const li = el("li"); li.append(el("span", "", typeof v === "object" ? v.title + " - " + v.detail : v)); rows.append(li); });
+        dd.replaceChildren(rows);
+      }
+      list.append(el("dt", "", input.label), dd);
     });
   });
   return list;
