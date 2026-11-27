@@ -145,3 +145,7 @@ Why: a real restaurant gets one clear order message instead of one message per d
 ## Premium editorial UI
 - Builder restyled as a printed magazine: masthead toolbar with icon groups, "Contents" rail with ticks and %, lettered choice cards, crop-marked live proof, numbered gallery plates, proof-sheet review, big export blocks, character counters, Enter hint. CSS split into style.css + panels.css (each under 200 lines).
 - Why: the flow already worked; this makes it look designed, not generated, while keeping Section 8 rules (paper/ink/one accent, 0 radius, no gradients or blur).
+
+## Site health score + SEO pack
+- Review step shows a 0-100 health score from five rule-based parts (SEO, Accessibility, Content, Speed, Links) with a fix list (js/health.js). Every site gets a favicon and JSON-LD; the ZIP adds favicon.svg, robots.txt, 404.html and sitemap.xml (js/seo.js).
+- Why: the student sees exactly what to fix before publishing, and the site is ready for Google without any AI or server.

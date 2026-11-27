@@ -6,7 +6,7 @@ const state = {
   contact: { email: "", phone: "", whatsapp: "", address: "" },
   footer: "",
   social: { instagram: "", linkedin: "", github: "" },
-  seo: { title: "", description: "" },
+  seo: { title: "", description: "", url: "" },
   logo: "", heroImage: "", aboutImage: "",
   madeWith: false
 };
@@ -29,7 +29,7 @@ function render() {
     el("p", "help", step.help)
   );
 
-  if (step.type === "review") box.append(renderReview(), renderChecks(), renderExport());
+  if (step.type === "review") box.append(renderReview(), renderHealth(), renderExport());
   else inputsOf(step).forEach(input => box.append(renderInput(input)));
 
   const nav = el("div", "nav");

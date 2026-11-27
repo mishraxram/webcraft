@@ -145,6 +145,7 @@ function page(state, theme, css, body) {
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${description}">
 <meta name="theme-color" content="${c.bg}">
+${seoHeadHTML(state, theme)}
 <style>
 ${fontFaceCSS(theme)}
 :root { ${colorVars(c)}

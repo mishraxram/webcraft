@@ -69,11 +69,22 @@ input[type="file"]:hover::file-selector-button { background: var(--accent-text);
 .review li { counter-increment: row; display: flex; gap: 12px; padding: 2px 0; }
 .review li::before { content: counter(row, decimal-leading-zero); flex: none; padding-top: 3px; font-family: var(--mono); font-size: 0.6875rem; color: var(--accent-text); }
 .review li span { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
-.checks { margin-top: 32px; padding: 16px 24px; border: 1px solid var(--ink); background: var(--field); }
-.checks:has(ul) { border-color: var(--accent); outline: 1px solid var(--accent); outline-offset: -4px; }
-.checks h2 { margin: 0 0 8px; }
-.checks ul { margin: 8px 0 0; padding-left: 20px; }
-.checks-ok { margin: 0; font-family: var(--mono); font-size: 0.8125rem; }
+/* Site health: big score, then one ruled row per part with a thin bar */
+.health { margin-top: 64px; padding-top: 16px; border-top: 2px solid var(--ink); }
+.health-head { display: flex; align-items: flex-end; gap: 24px; margin-bottom: 16px; }
+.health-num { margin: 0; font-family: var(--serif); font-weight: 700; font-size: 6rem; line-height: 0.8; letter-spacing: -0.04em; }
+.health-num span { font-family: var(--mono); font-size: 0.875rem; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.health-verdict h2 { margin: 0 0 4px; }
+.health-verdict p { margin: 0; color: #3D3A35; }
+.health-rows { margin: 0; padding: 0; list-style: none; }
+.health-rows > li { display: grid; grid-template-columns: 120px minmax(0, 1fr) 40px; align-items: center; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.health-name { font-family: var(--mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.12em; }
+.health-bar { height: 4px; background: var(--rule); }
+.health-bar span { display: block; height: 100%; background: var(--ink); transition: width 0.6s var(--ease); }
+.health-rows .low .health-bar span { background: var(--accent); }
+.health-score { font-family: var(--mono); font-size: 0.8125rem; text-align: right; }
+.health-rows .low .health-score { color: var(--accent-text); }
+.health-tips { grid-column: 2 / -1; margin: 4px 0 0; padding-left: 18px; font-size: 0.9375rem; color: #3D3A35; }
 
 /* Export: three big actions */
 .export { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 64px; padding-top: 16px; border-top: 2px solid var(--ink); }
@@ -140,6 +151,9 @@ input[type="file"]:hover::file-selector-button { background: var(--accent-text);
   .preview-label { display: none; }
   .review { grid-template-columns: minmax(0, 1fr); }
   .review dt { padding-bottom: 0; border-bottom: 0; }
+  .health-rows > li { grid-template-columns: 96px minmax(0, 1fr) 32px; }
+  .health-tips { grid-column: 1 / -1; }
+  .health-num { font-size: 4.5rem; }
   .nav .kbd-hint { display: none; }
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   .thumb { width: 100%; }

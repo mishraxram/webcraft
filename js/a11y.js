@@ -38,16 +38,3 @@ function checkSite(state) {
   return problems;
 }
 
-function renderChecks() {
-  const problems = checkSite(state);
-  const wrap = el("div", "checks");
-  wrap.append(el("h2", "", "Accessibility check"));
-  if (!problems.length) {
-    wrap.append(el("p", "checks-ok", "No problems found."));
-    return wrap;
-  }
-  const list = el("ul");
-  problems.forEach(text => list.append(el("li", "", text)));
-  wrap.append(el("p", "", problems.length + " to look at:"), list);
-  return wrap;
-}

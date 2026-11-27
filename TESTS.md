@@ -110,3 +110,8 @@
 | 106 | Press − until a dish reaches 0 | Dish removed; cart hides when empty | Paneer row removed (2 items · ₹1,080); at 0 items the cart disappears | Pass |
 | 107 | Dish name `<script>alert(1)</script>` with Add to order | Shown as text in card and cart, no script runs | Escaped as `&lt;script&gt;` in data-item, 0 script tags from the title | Pass |
 | 108 | Portfolio site (not restaurant) with WhatsApp number | No Add to order buttons, no cart | No `.add`, no `.cart`, no cart CSS | Pass |
+| 109 | Quick Demo, open Review | Health score with 5 bars and fix tips | 91/100, SEO 85, Speed 70 with tips | Pass |
+| 110 | Site name `<script>alert(1)</script>`, description `</script><script>alert(2)</script>` | JSON-LD and favicon stay text, no script runs | 0 `<script>alert` in output, favicon has no `<script` | Pass |
+| 111 | Site address `javascript:alert(1)` | Error under field, address ignored | "Enter a full address, like https://mysite.netlify.app"; siteUrl() empty | Pass |
+| 112 | Site address https://saffron.netlify.app/ then Download ZIP | ZIP has sitemap.xml, robots.txt with Sitemap line, canonical link | sitemap loc https://saffron.netlify.app/, canonical tag present | Pass |
+| 113 | Download ZIP with no site address | favicon.svg, robots.txt, 404.html, no sitemap | Files: index.html, style.css, README.txt, favicon.svg, robots.txt, 404.html | Pass |

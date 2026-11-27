@@ -57,7 +57,8 @@ const STEPS = [
   { id: "seo", title: "Search engine info", help: "Title and description show in Google results and the browser tab.",
     fields: [
       { type: "text", field: "seo.title", label: "Page title", maxLength: 60 },
-      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 }
+      { type: "text", field: "seo.description", label: "Page description", multiline: true, maxLength: 160 },
+      { type: "text", field: "seo.url", label: "Site address (optional)", check: "url", maxLength: 100 }
     ] },
 
   { id: "review", title: "Review", help: "Check your answers, then download or publish your site.",

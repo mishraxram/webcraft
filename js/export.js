@@ -40,6 +40,12 @@ function downloadZIP() {
   zip.file("index.html", page);
   zip.file("style.css", css + "\n");
   zip.file("README.txt", ZIP_README);
+  // SEO pack: icon, robots.txt, 404 page, and a sitemap when the site address is known
+  const theme = siteTheme(state);
+  zip.file("favicon.svg", faviconSVG(state, theme));
+  zip.file("robots.txt", robotsTXT(state));
+  zip.file("404.html", notFoundHTML(state, theme));
+  if (sitemapXML(state)) zip.file("sitemap.xml", sitemapXML(state));
   return zip.generateAsync({ type: "blob" }).then(blob => saveFile(blob, siteFileName() + ".zip"));
 }
 
@@ -251,7 +257,7 @@ function renderExport() {
   wrap.append(
     el("h2", "", "Download or publish"),
     credit,
-    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css and steps to put it online. Publish: saves it to the local server at localhost:3000 and adds a message form to the site."),
+    el("p", "help", "HTML: one file, open it anywhere. ZIP: index.html, style.css, favicon, robots.txt, a 404 page (and sitemap.xml if you gave a site address) plus steps to put it online. Publish: saves it to the local server at localhost:3000 and adds a message form to the site."),
     htmlButton, zipButton, publishButton, error, result,
     renderInbox(),
     el("h2", "host-title", "Put it online"),
